@@ -10,11 +10,10 @@
         <script>
             let newTabButton = document.getElementById("newTab")
             let newTabVal = newTabButton.value;
-            console.log(newTabVal);
 
             let newUrl = "http://gorillakingdom-env-1.eba-yrqq4xm3.us-east-2.elasticbeanstalk.com/"+newTabVal
             newTabButton.addEventListener("click", () => {
-                window.open(url);
+                newtab(newUrl);
             })
 
             //Open a new tab for a game

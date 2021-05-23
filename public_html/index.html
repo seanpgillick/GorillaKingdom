@@ -2,10 +2,24 @@
 <html>
     <head>
         <title>Gorilla Kingdom basic landing page</title>
-        
+
+        <script>
+            let newTab = document.getElementById("newTab")
+            let newTabVal = newTab.value;
+            console.log(newTabVal);
+
+            let newUrl = "http://gorillakingdom-env-1.eba-yrqq4xm3.us-east-2.elasticbeanstalk.com/"//+newTabVal
+            newTab.onclick = newTab(newUrl)
+
+            //Open a new tab for a game
+            function newTab(url){
+                console.log("URL: "+url);
+                window.open(url);
+            }
+        </script>
     </head>
     <body>
         <p>Test landing page for AWS</p>
-        <button id="newTab" value="blackjack">New Tab</button>
+        <button id="newTab" value="blackjack.html">New Tab</button>
     </body>
 </html>

@@ -13,7 +13,10 @@
             console.log(newTabVal);
 
             let newUrl = "http://gorillakingdom-env-1.eba-yrqq4xm3.us-east-2.elasticbeanstalk.com/"//+newTabVal
-            newTabButton.onclick = newTab(newUrl)
+            newTabButton.addEventListener("click", () => {
+                console.log("CLICKED NEW TAB");
+                //window.open(url);
+            })
 
             //Open a new tab for a game
             function newTab(url){

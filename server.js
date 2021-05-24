@@ -2,12 +2,21 @@ const pg = require("pg");
 const express = require("express");
 const app = express();
 
-const port = 3000;
-const hostname = "localhost";
+const port = process.env.port || 3000;
 
 app.use(express.json())
 app.use(express.static("public_html"));
 
+app.listen(port, () => {
+    console.log(`Listening at port: ${port}!!! :)`);
+}); 
+
+app.get('/', (req, res) => {
+    res.send("Welcome to the home page")
+});
+
+
+//////////////////////Blackjack///////////////////////
 let cards = {};
 let userCards = [];
 let userVals = [];
@@ -181,9 +190,4 @@ app.post("/blackjack", function (req, res) {
 
         //need to update the new balance into the databse
     }
-});
-
-
-app.listen(port, hostname, () => {
-    console.log(`Listening at: http://${hostname}:${port}`);
 });

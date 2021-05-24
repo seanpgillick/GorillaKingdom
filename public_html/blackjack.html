@@ -1,11 +1,57 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Gorilla Kingdom blackjack</title>
-        
-    </head>
-    <body>
-        <p>Test blackjack page for AWS</p>
-        <button id="newTab" value="index.html">Landing Page</button>
-    </body>
+<head>
+	<meta charset="utf-8">
+	<title>Blackjack</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="require.js"></script>
+
+</head>
+<body>
+
+<h1>Blackjack</h1>
+
+<div id="displayBalance" class="container">
+    <h2>Current Balance: $</h2>
+    <h2 id="currentBal"></h2>
+    <h2 id="matchResults" class="flex-item"></h2>
+</div>
+
+<div id="betDiv" class="form-group">
+    <label for="betAmount">Bet Amount:</label>
+    <input name="betAmount" id="betAmount" />
+</div>
+
+<div class="form">
+	<button id="startGame">Start game</button>
+    <button id="hitButton">Hit</button>
+    <button id="standButton">Stand</button>
+</div>
+
+
+<div id = "displayCards" class="container">
+    <div id="dealerCards" class="flex-item">
+        <h2>Dealer's Cards</h2>
+        <table>
+            <tbody id="dealerTable">
+            </tbody>
+        </table>
+        <h2 id="dealerSum">Dealer Sum: </h2>
+    </div>
+    <div id="userCards" class="flex-item">
+        <h2>User's Cards</h2>
+        <table class="flex-item">
+            <tbody id="userTable">
+            </tbody>
+        </table>
+        <h2 id="userSum">User Sum: </h2>
+        <h2 id="bustMessage"></h2>
+
+    </div>
+</div>
+
+<script src="blackjack.js"></script>
+
+</body>
 </html>

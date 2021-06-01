@@ -82,9 +82,19 @@ spin.addEventListener("click", function(){
             body: JSON.stringify(board),
         })
         .then(response => response.json())
-        .then(data => {
+        .then(async function(data){
             console.log(data)
             document.getElementById("payout").innerText = data.payout;
+            if(data.payout > 0) {
+                let symbol = document.getElementById(data.lines[0]).innerText;
+                for(var x = 0; x < 10; x++){
+                    for(var i = 0; i < data.lines.length; i++){
+                        document.getElementById(data.lines[i]).innerText = "X";
+                        await sleep(100);
+                        document.getElementById(data.lines[i]).innerText = symbol;
+                    }
+                }
+            }
         })
         .catch((error) => {
             console.error('Error', error);

@@ -215,27 +215,33 @@ app.post(`/pay/`, (req, res) => {
     let boardArray = req.body.board;
     let bet = req.query.bet;
     let payout = 0;
+    let wLines = [];
 
     if (checkH(boardArray, 0)){
         payout += bet*(boardArray[0][0]**2);
+        wLines.push(0,1,2);
     }
     if (checkH(boardArray, 1)){
         payout += bet*(boardArray[1][0]**2);
+        wLines.push(3,4,5);
     }
     if (checkH(boardArray, 2)){
         payout += bet*(boardArray[2][0]**2);
+        wLines.push(6,7,8);
     }
 
     if (checkDr(boardArray)){
         payout += bet*(boardArray[0][0]**2);
+        wLines.push(0,4,8);
     }
 
     if(checkDl(boardArray)){
         payout += bet*(boardArray[2][0]**2);
+        wLines.push(2,4,6);
     }
 
 
-    res.send({"payout": payout});
+    res.send({"payout": payout, "lines": wLines});
 })
 
 function checkH(arr, row){

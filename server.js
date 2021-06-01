@@ -191,3 +191,62 @@ app.post("/blackjack", function (req, res) {
         //need to update the new balance into the databse
     }
 });
+
+app.get("/spin", function(req, res) {
+    let resJson = {};
+
+    for(var i = 0; i < 30; i++){
+        let list = [];
+
+        list.push(Math.floor(Math.random() * (5-1) + 1));
+        list.push(Math.floor(Math.random() * (5-1) + 1));
+        list.push(Math.floor(Math.random() * (5-1) + 1));
+
+        resJson[i] = list;
+    }
+    
+    res.status = 200;
+    res.json(resJson);
+});
+
+app.post(`/pay/`, (req, res) => {
+    console.log(req.body);
+    console.log(req.query.bet);
+    let boardArray = req.body.board;
+    let bet = req.query.bet;
+    let payout = 0;
+
+    if (checkH(boardArray, 0)){
+        payout += bet*(boardArray[0][0]**2);
+    }
+    if (checkH(boardArray, 1)){
+        payout += bet*(boardArray[1][0]**2);
+    }
+    if (checkH(boardArray, 2)){
+        payout += bet*(boardArray[2][0]**2);
+    }
+
+    if (checkDr(boardArray)){
+        payout += bet*(boardArray[0][0]**2);
+    }
+
+    if(checkDl(boardArray)){
+        payout += bet*(boardArray[2][0]**2);
+    }
+
+
+    res.send({"payout": payout});
+})
+
+function checkH(arr, row){
+    return ((arr[row][0] === arr[row][1]) && (arr[row][1] === arr[row][2]));
+
+}
+
+function checkDr(arr){
+    return ((arr[0][0] === arr[1][1]) && (arr[1][1] === arr[2][2]));
+}
+
+function checkDl(arr){
+    return (arr[0][2] === arr[1][1] === arr[2][0]);
+}

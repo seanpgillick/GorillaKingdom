@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Horse Racing Simulation</title>
+	<style>
+		table {
+			border-collapse: collapse;
+		}
+		th, td {
+			border: 1px solid black;
+			padding: 10px;
+		}
+		table, div, button {
+			margin: 1rem 0;
+		}
+	</style>
+</head>
+<body>
+
+<h1>Horse Racing!</h1>
+
+<div>
+	<label for="horseSelection">Pick Your Horse:</label>
+	<select name="horseSelection" id="horse-select">
+		<option value="">Please select your horse!</option>
+		<option value="Blue">Blue</option>
+		<option value="Pink">Pink</option>
+		<option value="Red">Red</option>
+		<option value="Yellow">Yellow</option>
+	</select>
+</div>
+
+
+<div id=betSize>
+	<label for="betSize">Enter Bet Size:</label>
+	<input id="betSize" type="number">
+</div>
+
+<button id="get-button">Confirm Selection</button>
+
+<!-- <div id="track-div" style="background-color:green; border:6px solid orange; margin:0px; width:85%;"> -->
+<div id="track-div" style="background: linear-gradient(to right, green 90%, #783F04 10%); border:8px solid #783F04; margin:0px; width:95%;">
+
+<div style="margin:6px"></div>
+<img id="horse-blue-img" src="horse-blue.png" alt="Blue Horse" width="110" height="65"/>
+<!-- <div style="background-color:green; height: 20px; margin: 0px"> </div> -->
+<!-- <span style="font-size: 15pt; margin-left:3.5%; border:2px solid black; vertical-align:top;">1st plaee!</span> -->
+<span id="blue-span" style="margin-left:3.5%; vertical-align:top; color:#5DB2FF"></span>
+<div> </div>
+<img id="horse-pink-img" src="horse-pink.png" alt="Pink Horse" width="110" height="65"/>
+<span id="pink-span" style="margin-left:3.5%; vertical-align:top; color:#E75480"></span>
+
+<div> </div>
+<img id="horse-red-img" src="horse-red.png" alt="Red Horse" width="110" height="65"/>
+<span id="red-span" style="margin-left:3.5%; vertical-align:top; color:#FF0000"></span>
+
+<div> </div>
+<img id="horse-yellow-img" src="horse-yellow.png" alt="Yellow Horse" width="110" height="65"/>
+<span id="yellow-span" style="margin-left:3.5%; vertical-align:top; color:#CCCC00	"></span>
+<div style="margin:6px;"></div>
+
+</div>
+
+
+<script>
+
+horseBlue = document.getElementById("horse-blue-img");
+horsePink = document.getElementById("horse-pink-img");
+horseRed = document.getElementById("horse-red-img");
+horseYellow = document.getElementById("horse-yellow-img");
+
+
+//returns random integer in range [min, max], inclusive of the max value
+function getRandomIntegerInRange(min, max) {
+	return Math.floor(Math.random() * ((max + 1) - min) + min)
+}
+
+let totalMarginBlue = 0;
+let totalMarginPink = 0;
+let totalMarginRed = 0;
+let totalMarginYellow = 0;
+
+let minMove = 0.01;
+let maxMove = 0.22;
+
+let varInterval;
+
+let rankings = [];
+
+function moveHorse(horse, marginAmount) {
+	if (horse=='Blue') {
+		horseBlue.style.marginLeft = marginAmount + '%';
+	}
+	if (horse=='Pink') {
+		horsePink.style.marginLeft = marginAmount + '%';
+	}
+	if (horse=='Red') {
+		horseRed.style.marginLeft = marginAmount + '%';
+	}
+	if (horse=='Yellow') {
+		horseYellow.style.marginLeft = marginAmount + '%';
+	}
+}
+
+
+function finishRace() {
+	clearInterval(varInterval);
+}
+
+function incrementalMovement() {
+
+	nextMarginBlue = getRandomIntegerInRange(minMove, maxMove);
+	nextMarginPink = getRandomIntegerInRange(minMove, maxMove);
+	nextMarginRed = getRandomIntegerInRange(minMove, maxMove);
+	nextMarginYellow = getRandomIntegerInRange(minMove, maxMove);
+
+	totalMarginBlue += nextMarginBlue;
+	totalMarginPink += nextMarginPink;
+	totalMarginRed += nextMarginRed;
+	totalMarginYellow += nextMarginYellow;
+
+	if (rankings.length==1) {
+		displayRankings(rankings[0], "1st");
+	}
+
+	if (rankings.length==2) {
+		displayRankings(rankings[1], "2nd");
+	}
+
+	if (rankings.length==3) {
+		displayRankings(rankings[2], "3rd");
+	}
+
+	if (rankings.length==4) {
+		displayRankings(rankings[3], "4th");
+		displayResults(rankings[0]);
+		finishRace();
+	}
+
+	//always truncate down to a margin of 80 if we go over
+	if (totalMarginBlue>=80){
+		totalMarginBlue=80;
+		if (rankings.includes('blue')!=true) {
+			rankings.push('blue');
+		}
+	}
+	if (totalMarginPink>=80){
+		totalMarginPink=80;
+		if (rankings.includes('pink')!=true) {
+			rankings.push('pink');
+		}
+	}
+	if (totalMarginRed>=80){
+		totalMarginRed=80;
+		if (rankings.includes('red')!=true) {
+			rankings.push('red');
+		}
+	}
+	if (totalMarginYellow>=80){
+		totalMarginYellow=80;
+		if (rankings.includes('yellow')!=true) {
+			rankings.push('yellow');
+		}
+	}
+
+	moveHorse("Blue", totalMarginBlue);
+	moveHorse("Pink", totalMarginPink);
+	moveHorse("Red", totalMarginRed);
+	moveHorse("Yellow", totalMarginYellow);
+}
+
+
+function startRace() {
+	varInterval = setInterval(incrementalMovement, 9);
+}
+
+
+//define the button element and add functionality to it
+let startRaceButton = document.getElementById("get-button");
+startRaceButton.addEventListener("click", startRace);
+
+
+function displayRankings(color, position) {
+	let blueSpan = document.getElementById("blue-span");
+	let pinkSpan = document.getElementById("pink-span");
+	let redSpan = document.getElementById("red-span");
+	let yellowSpan = document.getElementById("yellow-span");
+
+	let dict = {"blue":blueSpan,
+						 	"pink":pinkSpan,
+							"red":redSpan,
+							"yellow":yellowSpan
+						}
+
+	let element = dict[color];
+	element.innerText = position + " Place!";
+	element.style.fontWeight = 'bolder';
+
+	if (position == "1st") {
+		element.style.fontSize = "15pt";
+	}
+
+}
+
+let playAgainButton;
+
+function displayResults(firstPlaceColor) {
+
+	var userChoice = document.getElementById("horse-select");
+	var choicetext = userChoice.options[userChoice.selectedIndex].text;
+
+	let bodyElement = document.querySelector("body");
+	let resultsDiv = document.createElement('h2');
+	let playAgain = document.createElement('button');
+	playAgain.textContent = "Play Again";
+	playAgain.style.fontSize = '12pt';
+	playAgain.setAttribute('id','play-again');
+
+	if (choicetext.toLowerCase()==firstPlaceColor) {
+		resultsDiv.textContent = "Congrats! You won!";
+	}
+	else {
+		resultsDiv.textContent = "Sorry! You lost.";
+	}
+	resultsDiv.style.margin = "0px";
+
+	bodyElement.appendChild(resultsDiv);
+	bodyElement.appendChild(playAgain);
+
+	playAgainButton = document.getElementById("play-again");
+	redirect();
+}
+
+function redirect() {
+		playAgainButton.addEventListener("click", playAgain);
+}
+
+//reset by reloading the page.
+function playAgain() {
+	window.location.reload();
+}
+
+</script>
+
+</body>
+</html>

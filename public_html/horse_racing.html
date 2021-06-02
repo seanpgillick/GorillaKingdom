@@ -9,14 +9,14 @@
 		}
 		th, td {
 			border: 1px solid black;
-			padding: 10px;
+			padding: 5px;
 		}
 		table, div, button {
 			margin: 1rem 0;
 		}
 	</style>
 </head>
-<body>
+<body style="Background-color:lightgreen;">
 
 <h1>Horse Racing!</h1>
 
@@ -31,21 +31,21 @@
 	</select>
 </div>
 
-
-<div id=betSize>
+<!-- Bet Size Input -->
+<div id=betSize style="margin: 2px;">
 	<label for="betSize">Enter Bet Size:</label>
-	<input id="betSize" type="number">
+	<input id="betSizeInput" type="number" min="1">
 </div>
 
-<button id="get-button">Confirm Selection</button>
+<!-- Button -->
+<button id="get-button" style="margin: 10px 0px;">Confirm Selection</button>
 
-<!-- <div id="track-div" style="background-color:green; border:6px solid orange; margin:0px; width:85%;"> -->
+<!-- Track Background -->
 <div id="track-div" style="background: linear-gradient(to right, green 90%, #783F04 10%); border:8px solid #783F04; margin:0px; width:95%;">
 
+<!-- Horse Figures -->
 <div style="margin:6px"></div>
 <img id="horse-blue-img" src="horse-blue.png" alt="Blue Horse" width="110" height="65"/>
-<!-- <div style="background-color:green; height: 20px; margin: 0px"> </div> -->
-<!-- <span style="font-size: 15pt; margin-left:3.5%; border:2px solid black; vertical-align:top;">1st plaee!</span> -->
 <span id="blue-span" style="margin-left:3.5%; vertical-align:top; color:#5DB2FF"></span>
 <div> </div>
 <img id="horse-pink-img" src="horse-pink.png" alt="Pink Horse" width="110" height="65"/>
@@ -65,29 +65,34 @@
 
 <script>
 
+//define horse elements
 horseBlue = document.getElementById("horse-blue-img");
 horsePink = document.getElementById("horse-pink-img");
 horseRed = document.getElementById("horse-red-img");
 horseYellow = document.getElementById("horse-yellow-img");
 
 
-//returns random integer in range [min, max], inclusive of the max value
+//return a random integer in range [min, max]; (inclusive of the max value)
 function getRandomIntegerInRange(min, max) {
 	return Math.floor(Math.random() * ((max + 1) - min) + min)
 }
 
+//these variables will contain each horse's total margin
 let totalMarginBlue = 0;
 let totalMarginPink = 0;
 let totalMarginRed = 0;
 let totalMarginYellow = 0;
 
+//IMPORTANT: this is the manually set range from which each increment is picked each iteration
 let minMove = 0.01;
 let maxMove = 0.22;
 
 let varInterval;
 
+//keep track of the order in which the horses finish
 let rankings = [];
 
+//adjust each horse's margin on the DOM here
 function moveHorse(horse, marginAmount) {
 	if (horse=='Blue') {
 		horseBlue.style.marginLeft = marginAmount + '%';
@@ -103,23 +108,26 @@ function moveHorse(horse, marginAmount) {
 	}
 }
 
-
+//stop the setInterval
 function finishRace() {
 	clearInterval(varInterval);
 }
 
 function incrementalMovement() {
 
+	//determine the random increments for each horse here
 	nextMarginBlue = getRandomIntegerInRange(minMove, maxMove);
 	nextMarginPink = getRandomIntegerInRange(minMove, maxMove);
 	nextMarginRed = getRandomIntegerInRange(minMove, maxMove);
 	nextMarginYellow = getRandomIntegerInRange(minMove, maxMove);
 
+	//add those random increments to each horse's running total of left margin
 	totalMarginBlue += nextMarginBlue;
 	totalMarginPink += nextMarginPink;
 	totalMarginRed += nextMarginRed;
 	totalMarginYellow += nextMarginYellow;
 
+	//display rankings as the horses finish
 	if (rankings.length==1) {
 		displayRankings(rankings[0], "1st");
 	}
@@ -134,17 +142,21 @@ function incrementalMovement() {
 
 	if (rankings.length==4) {
 		displayRankings(rankings[3], "4th");
-		displayResults(rankings[0]);
+
+		let resultWinnings = calculateWinnings();
+		displayResults(rankings[0], resultWinnings[0], resultWinnings[1]);
 		finishRace();
 	}
 
-	//always truncate down to a margin of 80 if we go over
+	//the next four statements handle each horse's arrival to the finish
 	if (totalMarginBlue>=80){
+		//always truncate down to a margin of 80 if we go over; this is the finish line
 		totalMarginBlue=80;
 		if (rankings.includes('blue')!=true) {
 			rankings.push('blue');
 		}
 	}
+
 	if (totalMarginPink>=80){
 		totalMarginPink=80;
 		if (rankings.includes('pink')!=true) {
@@ -164,23 +176,30 @@ function incrementalMovement() {
 		}
 	}
 
+	//move the horses on the DOM based on computed margins
 	moveHorse("Blue", totalMarginBlue);
 	moveHorse("Pink", totalMarginPink);
 	moveHorse("Red", totalMarginRed);
 	moveHorse("Yellow", totalMarginYellow);
 }
 
-
+//the race starts once the button is clicked
 function startRace() {
-	varInterval = setInterval(incrementalMovement, 9);
+	if (alreadyClicked==false) {
+		varInterval = setInterval(incrementalMovement, 9);
+		alreadyClicked=true;
+	}
 }
 
+//create a flag to check if the button was already clicked
+let alreadyClicked;
+alreadyClicked = false;
 
 //define the button element and add functionality to it
 let startRaceButton = document.getElementById("get-button");
 startRaceButton.addEventListener("click", startRace);
 
-
+//show race rankings by adding text and styling to placeholder span objects
 function displayRankings(color, position) {
 	let blueSpan = document.getElementById("blue-span");
 	let pinkSpan = document.getElementById("pink-span");
@@ -200,15 +219,27 @@ function displayRankings(color, position) {
 	if (position == "1st") {
 		element.style.fontSize = "15pt";
 	}
-
 }
 
 let playAgainButton;
 
-function displayResults(firstPlaceColor) {
+//calculate winnings
+function calculateWinnings() {
+	let userBetSize = document.getElementById('betSizeInput').value;
 
-	var userChoice = document.getElementById("horse-select");
-	var choicetext = userChoice.options[userChoice.selectedIndex].text;
+	//since odds are 1/4; winners will recive 4x their bet
+	let winAmount = userBetSize * 4;
+	let loseAmount = userBetSize;
+
+	return [winAmount, loseAmount]
+}
+
+//show a message for winners/losers after the race
+//and add a button to play again
+function displayResults(firstPlaceColor, winAmount, loseAmount) {
+
+	let userChoice = document.getElementById("horse-select");
+	let choicetext = userChoice.options[userChoice.selectedIndex].text;
 
 	let bodyElement = document.querySelector("body");
 	let resultsDiv = document.createElement('h2');
@@ -218,12 +249,12 @@ function displayResults(firstPlaceColor) {
 	playAgain.setAttribute('id','play-again');
 
 	if (choicetext.toLowerCase()==firstPlaceColor) {
-		resultsDiv.textContent = "Congrats! You won!";
+		resultsDiv.textContent = "Congrats! You won $" + winAmount;
 	}
 	else {
-		resultsDiv.textContent = "Sorry! You lost.";
+		resultsDiv.textContent = "Sorry! You lost $" + loseAmount;
 	}
-	resultsDiv.style.margin = "0px";
+	resultsDiv.style.margin = "6px 0px";
 
 	bodyElement.appendChild(resultsDiv);
 	bodyElement.appendChild(playAgain);
@@ -236,7 +267,7 @@ function redirect() {
 		playAgainButton.addEventListener("click", playAgain);
 }
 
-//reset by reloading the page.
+//reset the race by reloading the page
 function playAgain() {
 	window.location.reload();
 }

@@ -1,0 +1,37 @@
+/*CSS styling for the login page */
+
+body {
+  background-image: url("Background_Jungle.jpg");
+  background-size: 100%;
+  height: 100%;
+}
+
+h2 {
+  margin: 1px;
+}
+
+#username {
+  margin: 5px 0px;
+}
+
+#password {
+  margin: 0px 0px 3px 0px;
+}
+
+.kingdom_title_img {
+  width: 375px;
+  height: 210px;
+  margin-top: 30px;
+}
+
+.gorilla_background_img {
+  float: left;
+  margin: 0px 65px 0px 0px;
+  border: 3px solid black;
+  width: 41%;
+  height: 50%;
+}
+
+#number-container {
+  margin: 15px 0px
+}

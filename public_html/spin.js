@@ -131,39 +131,39 @@ function findImg(num) {
     
     let iTen = document.createElement("img");
     iTen.src = "symbols/ten.png";
-    iTen.dataValue = "1";
+    iTen.value = "1";
     iTen.id = "ten";
 
     let iPlum = document.createElement("img");
     iPlum.src = "symbols/plum.png";
-    iPlum.dataValue = "2";
+    iPlum.value = "2";
     iPlum.id = "plum";
 
     let iLemon = document.createElement("img");
     iLemon.src = "symbols/lemon.png";
-    iLemon.dataValue = "3";
+    iLemon.value = "3";
     iLemon.id = "lemon";
 
     let iDiamond = document.createElement("img");
     iDiamond.src = "symbols/diamond.png";
-    iDiamond.dataValue = "4";
+    iDiamond.value = "4";
     iDiamond.id = "diamond";
     console.log("Number", number);
-    console.log("Value", iTen.getAttribute("data-value"));
+    console.log("Value", iTen.getAttribute("value"));
     
-    if (number === parseInt(iTen.getAttribute("data-value"))) {
+    if (number === parseInt(iTen.getAttribute("value"))) {
         return iTen;
     }
     
-    if (number === parseInt(iPlum.getAttribute("data-value"))) {
+    if (number === parseInt(iPlum.getAttribute("value"))) {
         return iPlum;
     }
     
-    if (number === parseInt(iLemon.getAttribute("data-value"))) {
+    if (number === parseInt(iLemon.getAttribute("value"))) {
         return iLemon;
     }
     
-    if (number === parseInt(iDiamond.getAttribute("data-value"))) {
+    if (number === parseInt(iDiamond.getAttribute("value"))) {
         return iDiamond;
     }
     

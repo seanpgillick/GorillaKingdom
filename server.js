@@ -6,7 +6,7 @@ app.use(express.json())
 app.use(express.static("public_html"));
 
 ///////////Database/////////
-var mysql = require('mysql');
+//var mysql = require('mysql');
 
 /*var connection = mysql.createConnection({
     host     : process.env.RDS_HOSTNAME,
@@ -29,7 +29,6 @@ connection.connect(function(err) {
 });*/
 
 app.post("/login", function (req, res) {
-    console.log(connection);
     let username = req.body.username;
     let plaintextPassword = req.body.plaintextPassword;
     

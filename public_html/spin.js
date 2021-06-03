@@ -125,12 +125,14 @@ spin.addEventListener("click", function(){
             console.log(data)
             document.getElementById("payout").innerText = data.payout;
             if(data.payout > 0) {
-                let symbol = findImg(document.getElementById(data.lines[0]).value);
+                let symbol = findImg(document.getElementById(data.lines[0]);
                 for(var x = 0; x < 10; x++){
                     for(var i = 0; i < data.lines.length; i++){
                         document.getElementById(data.lines[i]).removeChild(document.getElementById(data.lines[i]).firstChild);
                         document.getElementById(data.lines[i]).append(iWin);
+                        
                         await sleep(100);
+                        
                         document.getElementById(data.lines[i]).removeChild(document.getElementById(data.lines[i]).firstChild);
                         document.getElementById(data.lines[i]).append(symbol);
                     }

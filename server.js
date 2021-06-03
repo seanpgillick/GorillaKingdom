@@ -20,6 +20,8 @@ connection.connect(function(err) {
     }
     console.log('Connected to database.');
 });
+connection.end();
+
 app.post("/login", function (req, res) {
     console.log(connection);
     let username = req.body.username;
@@ -29,6 +31,7 @@ app.post("/login", function (req, res) {
         res.status(401).send();
     }
     
+    connection.connect();
     connection.query("INSERT INTO accountInfo (username, hashed_password) VALUES ($1, $2)",
              [username, plaintextPassword]
     )
@@ -40,6 +43,7 @@ app.post("/login", function (req, res) {
         console.log(error);
         res.status(500).send(); // server error
     });
+    connection.end();
     
     /*connection.query("SELECT username FROM accountInfo WHERE username = $1", [
         username,

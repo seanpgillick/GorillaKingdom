@@ -18,7 +18,7 @@ spin.addEventListener("click", function(){
             document.getElementById("5").append(findImg(data[1][2]));
             document.getElementById("6").append(findImg(data[2][0]));
             document.getElementById("7").append(findImg(data[2][1]));
-            document.getElementById("8").append(findImg(data[2][2]))
+            document.getElementById("8").append(findImg(data[2][2]));
             for (var i = 0; i < runT; i++){
                 let top = i;
                 let mid;

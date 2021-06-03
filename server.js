@@ -10,24 +10,33 @@ app.use(express.static("public_html"));
 ///////////Database/////////
 var mysql = require('mysql');
 
-var connection = mysql.createConnection({
+var pool = mysql.createPool({
     host     : process.env.RDS_HOSTNAME,
     user     : process.env.RDS_USERNAME,
     password : process.env.RDS_PASSWORD,
     port     : process.env.RDS_PORT
 });
 
-connection.connect(function(err) {
-    if (err) {
-        console.error('Database connection failed: ' + err.stack);
-        return;
+pool.getConnection(function(err, connection) {
+    if (err){
+        console.log("Failed to connect to the db");
+        throw err;
     }
+   
+    // Use the connection
+    connection.query('SELECT * FROM accountInfo', function (error, results, fields) {
+        console.log("Connected to db");
+        console.log(results);
 
-    console.log('Connected to database.');
+        // When done with the connection, release it.
+        connection.release();
+   
+        // Handle error after the release.
+        if (error) throw error;
+   
+        // Don't use the connection here, it has been returned to the pool.
+    });
 });
-
-connection.end();
-console.log("Connection closed");
 
 app.listen(port, () => {
     console.log(`Listening at port: ${port}!!! :)`);
@@ -278,5 +287,5 @@ function checkDr(arr){
 }
 
 function checkDl(arr){
-    return ((arr[0][2] === arr[1][1]) && (arr[1][1] === arr[2][0]));
+    return (arr[0][2] === arr[1][1] === arr[2][0]);
 }

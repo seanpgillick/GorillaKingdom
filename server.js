@@ -38,7 +38,7 @@ app.post("/login", function (req, res) {
         res.status(401).send();
     }
 
-    connection.query("SELECT username FROM accountInfo WHERE username = $1", [
+    /*connection.query("SELECT username FROM accountInfo WHERE username = $1", [
         username,
     ])
         .then(function (response) {
@@ -50,7 +50,7 @@ app.post("/login", function (req, res) {
         .catch(function (error) {
             console.log(error);
             res.status(500).send(); // server error
-        });
+        });*/
 
     /*pool.query(
         "INSERT INTO users (username, hashed_password) VALUES ($1, $2)",

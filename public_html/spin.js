@@ -131,22 +131,22 @@ function findImg(num) {
     
     let iTen = document.createElement("img");
     iTen.src = "symbols/ten.png";
-    iTen.dataValue = 1;
+    iTen.dataValue = "1";
     iTen.id = "ten";
 
     let iPlum = document.createElement("img");
     iPlum.src = "symbols/plum.png";
-    iPlum.dataValue = 2;
+    iPlum.dataValue = "2";
     iPlum.id = "plum";
 
     let iLemon = document.createElement("img");
     iLemon.src = "symbols/lemon.png";
-    iLemon.dataValue = 3;
+    iLemon.dataValue = "3";
     iLemon.id = "lemon";
 
     let iDiamond = document.createElement("img");
     iDiamond.src = "symbols/diamond.png";
-    iDiamond.dataValue = 4;
+    iDiamond.dataValue = "4";
     iDiamond.id = "diamond";
     
     if (number === parseInt(iTen.getAttribute("data-value"))) {

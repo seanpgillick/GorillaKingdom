@@ -10,7 +10,7 @@ app.use(express.static("public_html"));
 ///////////Database/////////
 var mysql = require('mysql');
 
-var connection = mysql.createConnection({
+/*var connection = mysql.createConnection({
     host     : process.env.RDS_HOSTNAME,
     user     : process.env.RDS_USERNAME,
     password : process.env.RDS_PASSWORD,
@@ -32,7 +32,7 @@ connection.query('SELECT * FROM `accountInfo`', function (error, results, fields
 });
 
 connection.end();
-console.log("Connection closed");
+console.log("Connection closed");*/
 
 app.listen(port, () => {
     console.log(`Listening at port: ${port}!!! :)`);

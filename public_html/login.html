@@ -17,12 +17,12 @@
 
 <div id=username>
 	<label for="username">Username:</label>
-	<input id="username" type="text">
+	<input id="usernameInput" type="text">
 </div>
 
 <div id=password>
 	<label for="password">Password:</label>
-	<input id="password" type="password">
+	<input id="passwordInput" type="password">
 </div>
 
 <!-- doesn't do anything when clicked (yet) -->
@@ -59,8 +59,8 @@ function betSizing(container) {
 }
 
 function loginFunc(){
-	let usernameInput = document.getElementById("username");
-	let passwordInput = document.getElementById("password");
+	let usernameInput = document.getElementById("usernameInput");
+	let passwordInput = document.getElementById("passwordInput");
 	console.log(usernameInput.value);
 	console.log(passwordInput.value);
 	fetch("/login", {

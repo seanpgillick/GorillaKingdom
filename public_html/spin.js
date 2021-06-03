@@ -8,6 +8,11 @@ spin.addEventListener("click", function(){
     .then(async function(data){
         console.log(data);
         let size = Object.keys(data).length;
+        if (document.getElementById("0").childElementCount > 0) {
+            for (var x = 0; x < 9; x ++) {
+                document.getElementById(x).removeChild(document.getElementById(x).firstChild);
+            }
+        }
         document.getElementById("0").append(findImg(data[0][0]));
         document.getElementById("1").append(findImg(data[0][1]));
         document.getElementById("2").append(findImg(data[0][2]));
@@ -98,9 +103,9 @@ spin.addEventListener("click", function(){
         console.log(bet);
 
         let responseArr = [
-                            [document.getElementById("0").innerText, document.getElementById("1").innerText, document.getElementById("2").innerText],
-                            [document.getElementById("3").innerText, document.getElementById("4").innerText, document.getElementById("5").innerText],
-                            [document.getElementById("6").innerText, document.getElementById("7").innerText, document.getElementById("8").innerText]
+                            [document.getElementById("0").firstChild.value, document.getElementById("1").firstChild.value, document.getElementById("2").firstChild.value],
+                            [document.getElementById("3").firstChild.value, document.getElementById("4").firstChild.value, document.getElementById("5").firstChild.value],
+                            [document.getElementById("6").firstChild.value, document.getElementById("7").firstChild.value, document.getElementById("8").firstChild.value]
                         ];
 
         let board = { "board": responseArr };
@@ -115,15 +120,19 @@ spin.addEventListener("click", function(){
         })
         .then(response => response.json())
         .then(async function(data){
+            let iWin = document.createElement("img");
+            iWin.src = "symbols/win.png";
             console.log(data)
             document.getElementById("payout").innerText = data.payout;
             if(data.payout > 0) {
-                let symbol = document.getElementById(data.lines[0]).innerText;
+                let symbol = findImg(document.getElementById(data.lines[0]).value);
                 for(var x = 0; x < 10; x++){
                     for(var i = 0; i < data.lines.length; i++){
-                        document.getElementById(data.lines[i]).innerText = "X";
+                        document.getElementById(data.lines[i]).removeChild(document.getElementById(data.lines[i]).firstChild);
+                        document.getElementById(data.lines[i]).append(iWin);
                         await sleep(100);
-                        document.getElementById(data.lines[i]).innerText = symbol;
+                        document.getElementById(data.lines[i]).removeChild(document.getElementById(data.lines[i]).firstChild);
+                        document.getElementById(data.lines[i]).append(symbol);
                     }
                 }
             }

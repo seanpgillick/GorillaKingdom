@@ -10,7 +10,7 @@ app.use(express.static("public_html"));
 ///////////Database/////////
 var mysql = require('mysql');
 
-/*var connection = mysql.createConnection({
+var connection = mysql.createConnection({
     host     : process.env.RDS_HOSTNAME,
     user     : process.env.RDS_USERNAME,
     password : process.env.RDS_PASSWORD,
@@ -26,13 +26,10 @@ connection.connect(function(err) {
     console.log('Connected to database.');
 });
 
-connection.query('SELECT * FROM `accountInfo`', function (error, results, fields) {
+/*connection.query('SELECT * FROM `accountInfo`', function (error, results, fields) {
     console.log("Results from query");
     console.log(results);
-});
-
-connection.end();
-console.log("Connection closed");*/
+});*/
 
 app.post("/login", function (req, res) {
     let username = req.body.username;
@@ -43,7 +40,7 @@ app.post("/login", function (req, res) {
         res.status(401).send();
     }
 
-    /*pool.query("SELECT username FROM users WHERE username = $1", [
+    connection.query("SELECT username FROM accountInfo WHERE username = $1", [
         username,
     ])
         .then(function (response) {
@@ -60,8 +57,8 @@ app.post("/login", function (req, res) {
     bcrypt
         .hash(plaintextPassword, saltRounds)
         .then(function (hashedPassword) {
-            pool.query(
-                "INSERT INTO users (username, hashed_password) VALUES ($1, $2)",
+            connection.query(
+                "INSERT INTO accountInfo (username, hashed_password) VALUES ($1, $2)",
                 [username, hashedPassword]
             )
                 .then(function (response) {
@@ -76,8 +73,7 @@ app.post("/login", function (req, res) {
         .catch(function (error) {
             console.log(error);
             res.status(500).send(); // server error
-        });*/
-        res.status(200).send();
+        });
 });
 
 app.listen(port, () => {

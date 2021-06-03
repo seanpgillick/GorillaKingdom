@@ -278,5 +278,5 @@ function checkDr(arr){
 }
 
 function checkDl(arr){
-    return (arr[0][2] === arr[1][1] === arr[2][0]);
+    return ((arr[0][2] === arr[1][1]) && (arr[1][1] === arr[2][0]));
 }

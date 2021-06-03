@@ -185,5 +185,4 @@ function sleep(ms) {
 
 window.onload = function() {
     createTable(3,3);
-    makeImages();
 }

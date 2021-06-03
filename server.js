@@ -7,9 +7,33 @@ const port = process.env.port || 3000;
 app.use(express.json())
 app.use(express.static("public_html"));
 
+///////////Database/////////
+var mysql = require('mysql');
+
+var connection = mysql.createConnection({
+    host     : process.env.RDS_HOSTNAME,
+    user     : process.env.RDS_USERNAME,
+    password : process.env.RDS_PASSWORD,
+    port     : process.env.RDS_PORT
+});
+
+connection.connect(function(err) {
+    if (err) {
+        console.error('Database connection failed: ' + err.stack);
+        return;
+    }
+
+    console.log('Connected to database.');
+});
+
+connection.end();
+console.log("Connection closed");
+
 app.listen(port, () => {
     console.log(`Listening at port: ${port}!!! :)`);
 }); 
+
+///////////////////////////
 
 app.get('/', (req, res) => {
     res.send("Welcome to the home page")

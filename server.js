@@ -66,10 +66,6 @@ app.post("/login", function (req, res) {
     });*/
 });
 
-app.listen(port, () => {
-    console.log(`Listening at port: ${port}!!! :)`);
-}); 
-
 ///////////////////////////
 
 app.get('/', (req, res) => {

@@ -10,33 +10,24 @@ app.use(express.static("public_html"));
 ///////////Database/////////
 var mysql = require('mysql');
 
-var pool = mysql.createPool({
+var connection = mysql.createConnection({
     host     : process.env.RDS_HOSTNAME,
     user     : process.env.RDS_USERNAME,
     password : process.env.RDS_PASSWORD,
     port     : process.env.RDS_PORT
 });
 
-pool.getConnection(function(err, connection) {
-    if (err){
-        console.log("Failed to connect to the db");
-        throw err;
+connection.connect(function(err) {
+    if (err) {
+        console.error('Database connection failed: ' + err.stack);
+        return;
     }
-   
-    // Use the connection
-    connection.query('SELECT * FROM accountInfo', function (error, results, fields) {
-        console.log("Connected to db");
-        console.log(results);
 
-        // When done with the connection, release it.
-        connection.release();
-   
-        // Handle error after the release.
-        if (error) throw error;
-   
-        // Don't use the connection here, it has been returned to the pool.
-    });
+    console.log('Connected to database.');
 });
+
+connection.end();
+console.log("Connection closed");
 
 app.listen(port, () => {
     console.log(`Listening at port: ${port}!!! :)`);

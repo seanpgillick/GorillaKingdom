@@ -1,25 +1,5 @@
 let spin = document.getElementById("spin");
 
-let iTen = document.createElement("img");
-iTen.src = "symbols/ten.png";
-iTen.dataValue = 1;
-iTen.id = "ten";
-
-let iPlum = document.createElement("img");
-iPlum.src = "symbols/plum.png";
-iPlum.dataValue = 2;
-iPlum.id = "plum";
-
-let iLemon = document.createElement("img");
-iLemon.src = "symbols/lemon.png";
-iLemon.dataValue = 3;
-iLemon.id = "lemon";
-
-let iDiamond = document.createElement("img");
-iDiamond.src = "symbols/diamond.png";
-iDiamond.dataValue = 4;
-iDiamond.id = "diamond";
-
 spin.addEventListener("click", function(){
     let bet = document.getElementById("bet").value;
 
@@ -167,10 +147,33 @@ function createTable(rows, cols) {
     tables.append(tabObj);
 }
 
+function makeImages(){
+    let iTen = document.createElement("img");
+    iTen.src = "symbols/ten.png";
+    iTen.dataValue = 1;
+    iTen.id = "ten";
+
+    let iPlum = document.createElement("img");
+    iPlum.src = "symbols/plum.png";
+    iPlum.dataValue = 2;
+    iPlum.id = "plum";
+
+    let iLemon = document.createElement("img");
+    iLemon.src = "symbols/lemon.png";
+    iLemon.dataValue = 3;
+    iLemon.id = "lemon";
+
+    let iDiamond = document.createElement("img");
+    iDiamond.src = "symbols/diamond.png";
+    iDiamond.dataValue = 4;
+    iDiamond.id = "diamond";
+
+}
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
 window.onload = function() {
     createTable(3,3);
+    makeImages();
 }

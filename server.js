@@ -34,6 +34,52 @@ connection.query('SELECT * FROM `accountInfo`', function (error, results, fields
 connection.end();
 console.log("Connection closed");*/
 
+app.post("/user", function (req, res) {
+    let username = req.body.username;
+    let plaintextPassword = req.body.plaintextPassword;
+    
+
+    if (!(typeof username === 'string') || !(typeof plaintextPassword === 'string') || username.length < 1 || plaintextPassword.length < 4){
+        res.status(401).send();
+    }
+
+    /*pool.query("SELECT username FROM users WHERE username = $1", [
+        username,
+    ])
+        .then(function (response) {
+            if (!(response.rows.length === 0)) {
+                // username exists
+                return res.status(401).send();
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+            res.status(500).send(); // server error
+        });
+
+    bcrypt
+        .hash(plaintextPassword, saltRounds)
+        .then(function (hashedPassword) {
+            pool.query(
+                "INSERT INTO users (username, hashed_password) VALUES ($1, $2)",
+                [username, hashedPassword]
+            )
+                .then(function (response) {
+                    // account successfully created
+                    res.status(200).send();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    res.status(500).send(); // server error
+                });
+        })
+        .catch(function (error) {
+            console.log(error);
+            res.status(500).send(); // server error
+        });*/
+        res.status(200).send();
+});
+
 app.listen(port, () => {
     console.log(`Listening at port: ${port}!!! :)`);
 }); 

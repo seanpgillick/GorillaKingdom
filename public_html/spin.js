@@ -125,7 +125,7 @@ spin.addEventListener("click", function(){
             console.log(data)
             document.getElementById("payout").innerText = data.payout;
             if(data.payout > 0) {
-                let symbol = findImg(document.getElementById(data.lines[0]);
+                let symbol = findImg(data.lines[0]);
                 for(var x = 0; x < 10; x++){
                     for(var i = 0; i < data.lines.length; i++){
                         document.getElementById(data.lines[i]).removeChild(document.getElementById(data.lines[i]).firstChild);

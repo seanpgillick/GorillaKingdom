@@ -35,6 +35,18 @@ spin.addEventListener("click", function(){
                 }
 
                 if (x === 0) {
+                                        
+                    document.getElementById("0").removeChild(getElementById("0").firstChild());
+                    document.getElementById("1").removeChild(getElementById("1").firstChild());
+                    document.getElementById("2").removeChild(getElementById("2").firstChild());
+                    document.getElementById("3").removeChild(getElementById("3").firstChild());
+                    document.getElementById("4").removeChild(getElementById("4").firstChild());
+                    document.getElementById("5").removeChild(getElementById("5").firstChild());
+                    document.getElementById("6").removeChild(getElementById("6").firstChild());
+                    document.getElementById("7").removeChild(getElementById("7").firstChild());
+                    document.getElementById("8").removeChild(getElementById("8").firstChild());
+
+                    
                     document.getElementById("0").append(findImg(data[top][x]));
                     document.getElementById("1").append(findImg(data[top][x+1]));
                     document.getElementById("2").append(findImg(data[top][x+2]));
@@ -106,20 +118,40 @@ spin.addEventListener("click", function(){
 });
 
 function findImg(num) {
-    if (num === document.getElementById("ten").getAttribute("data-value")) {
-        return document.getElementById("ten");
+    let iTen = document.createElement("img");
+    iTen.src = "symbols/ten.png";
+    iTen.dataValue = "1";
+    iTen.id = "ten";
+
+    let iPlum = document.createElement("img");
+    iPlum.src = "symbols/plum.png";
+    iPlum.dataValue = "2";
+    iPlum.id = "plum";
+
+    let iLemon = document.createElement("img");
+    iLemon.src = "symbols/lemon.png";
+    iLemon.dataValue = "3";
+    iLemon.id = "lemon";
+
+    let iDiamond = document.createElement("img");
+    iDiamond.src = "symbols/diamond.png";
+    iDiamond.dataValue = "4";
+    iDiamond.id = "diamond";
+    
+    if (num === iTen.getAttribute("data-value")) {
+        return iTen;
     }
     
-    if (num === document.getElementById("plum").getAttribute("data-value")) {
-        return document.getElementById("plum");
+    if (num === iPlum.getAttribute("data-value")) {
+        return iPlum;
     }
     
-    if (num === document.getElementById("lemon").getAttribute("data-value")) {
-        return document.getElementById("lemon");
+    if (num === iLemon.getAttribute("data-value")) {
+        return iLemon;
     }
     
-    if (num === document.getElementById("diamond").getAttribute("data-value")) {
-        return document.getElementById("diamond");
+    if (num === iDiamond.getAttribute("data-value")) {
+        return iDiamond;
     }
     
     return "yee";
@@ -147,28 +179,6 @@ function createTable(rows, cols) {
     tables.append(tabObj);
 }
 
-function makeImages(){
-    let iTen = document.createElement("img");
-    iTen.src = "symbols/ten.png";
-    iTen.dataValue = "1";
-    iTen.id = "ten";
-
-    let iPlum = document.createElement("img");
-    iPlum.src = "symbols/plum.png";
-    iPlum.dataValue = "2";
-    iPlum.id = "plum";
-
-    let iLemon = document.createElement("img");
-    iLemon.src = "symbols/lemon.png";
-    iLemon.dataValue = "3";
-    iLemon.id = "lemon";
-
-    let iDiamond = document.createElement("img");
-    iDiamond.src = "symbols/diamond.png";
-    iDiamond.dataValue = "4";
-    iDiamond.id = "diamond";
-
-}
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }

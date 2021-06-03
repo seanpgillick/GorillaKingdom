@@ -132,7 +132,7 @@ spin.addEventListener("click", function(){
                         document.getElementById(data.lines[i]).removeChild(document.getElementById(data.lines[i]).firstChild);
                         document.getElementById(data.lines[i]).append(iWin);
                         
-                        await sleep(1000);
+                        await sleep(100);
                         
                         document.getElementById(data.lines[i]).removeChild(document.getElementById(data.lines[i]).firstChild);
                         document.getElementById(data.lines[i]).append(symbol);

@@ -141,6 +141,8 @@ function findImg(num) {
     if (num === document.getElementById("diamond").getAttribute("data-value")) {
         return document.getElementById("diamond");
     }
+    
+    return "yee";
 }
 
 function createTable(rows, cols) {

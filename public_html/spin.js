@@ -126,20 +126,20 @@ spin.addEventListener("click", function(){
 });
 
 function findImg(num) {
-    if (num === iTen.getAttribute("data-value")) {
-        return iTen;
+    if (num === document.getElementById("ten").getAttribute("data-value")) {
+        return document.getElementById("ten");
     }
     
-    if (num === iPlum.getAttribute("data-value")) {
-        return iPlum;
+    if (num === document.getElementById("plum").getAttribute("data-value")) {
+        return document.getElementById("plum");
     }
     
-    if (num === iLemon.getAttribute("data-value")) {
-        return iLemon;
+    if (num === document.getElementById("lemon").getAttribute("data-value")) {
+        return document.getElementById("lemon");
     }
     
-    if (num === iDiamond.getAttribute("data-value")) {
-        return iDiamond;
+    if (num === document.getElementById("diamond").getAttribute("data-value")) {
+        return document.getElementById("diamond");
     }
 }
 

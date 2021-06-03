@@ -68,18 +68,29 @@ spin.addEventListener("click", function(){
                 }
 
                 else if (x === 1) {
-                    document.getElementById("1").innerText = data[top][x];
-                    document.getElementById("2").innerText = data[top][x+1];
-                    document.getElementById("4").innerText =  data[mid][x];
-                    document.getElementById("5").innerText = data[mid][x+1];
-                    document.getElementById("7").innerText = data[bot][x];
-                    document.getElementById("8").innerText = data[bot][x+1];
+                    document.getElementById("1").removeChild(document.getElementById("1").firstChild);
+                    document.getElementById("2").removeChild(document.getElementById("2").firstChild);
+                    document.getElementById("4").removeChild(document.getElementById("4").firstChild);
+                    document.getElementById("5").removeChild(document.getElementById("5").firstChild);
+                    document.getElementById("7").removeChild(document.getElementById("7").firstChild);
+                    document.getElementById("8").removeChild(document.getElementById("8").firstChild);
+                    
+                    document.getElementById("1").append(findImg(data[top][x]));
+                    document.getElementById("2").append(findImg(data[top][x+1]));
+                    document.getElementById("4").append(findImg(data[mid][x]));
+                    document.getElementById("5").append(findImg(data[mid][x+1]));
+                    document.getElementById("7").append(findImg(data[bot][x]));
+                    document.getElementById("8").append(findImg(data[bot][x+1]));
                 }
 
                 else {
-                    document.getElementById("2").innerText = data[top][x];
-                    document.getElementById("5").innerText = data[mid][x];
-                    document.getElementById("8").innerText = data[bot][x];
+                    document.getElementById("2").removeChild(document.getElementById("2").firstChild);
+                    document.getElementById("5").removeChild(document.getElementById("5").firstChild);
+                    document.getElementById("8").removeChild(document.getElementById("8").firstChild);
+                    
+                    document.getElementById("2").append(findImg(data[top][x]));
+                    document.getElementById("5").append(findImg(data[mid][x]));
+                    document.getElementById("8").append(findImg(data[bot][x]));
                 }
                 await sleep(50);
             }

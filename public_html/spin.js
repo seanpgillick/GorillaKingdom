@@ -36,15 +36,15 @@ spin.addEventListener("click", function(){
 
                 if (x === 0) {
                                         
-                    document.getElementById("0").removeChild(document.getElementById("0").firstChild());
-                    document.getElementById("1").removeChild(document.getElementById("1").firstChild());
-                    document.getElementById("2").removeChild(document.getElementById("2").firstChild());
-                    document.getElementById("3").removeChild(document.getElementById("3").firstChild());
-                    document.getElementById("4").removeChild(document.getElementById("4").firstChild());
-                    document.getElementById("5").removeChild(document.getElementById("5").firstChild());
-                    document.getElementById("6").removeChild(document.getElementById("6").firstChild());
-                    document.getElementById("7").removeChild(document.getElementById("7").firstChild());
-                    document.getElementById("8").removeChild(document.getElementById("8").firstChild());
+                    document.getElementById("0").removeChild(document.getElementById("0").firstChild);
+                    document.getElementById("1").removeChild(document.getElementById("1").firstChild);
+                    document.getElementById("2").removeChild(document.getElementById("2").firstChild);
+                    document.getElementById("3").removeChild(document.getElementById("3").firstChild);
+                    document.getElementById("4").removeChild(document.getElementById("4").firstChild);
+                    document.getElementById("5").removeChild(document.getElementById("5").firstChild);
+                    document.getElementById("6").removeChild(document.getElementById("6").firstChild);
+                    document.getElementById("7").removeChild(document.getElementById("7").firstChild);
+                    document.getElementById("8").removeChild(document.getElementById("8").firstChild);
 
                     
                     document.getElementById("0").append(findImg(data[top][x]));

@@ -34,7 +34,7 @@ connection.query('SELECT * FROM `accountInfo`', function (error, results, fields
 connection.end();
 console.log("Connection closed");*/
 
-app.post("/user", function (req, res) {
+app.post("/login", function (req, res) {
     let username = req.body.username;
     let plaintextPassword = req.body.plaintextPassword;
     

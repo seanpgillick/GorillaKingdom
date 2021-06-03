@@ -148,7 +148,8 @@ function findImg(num) {
     iDiamond.src = "symbols/diamond.png";
     iDiamond.value = "4";
     iDiamond.id = "diamond";
-    
+    console.log("Number", number);
+    console.log("Value", iTen.getAttribute("value"));
     if (number === parseInt(iTen.getAttribute("value"))) {
         return iTen;
     }

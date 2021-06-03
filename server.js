@@ -1,9 +1,6 @@
 const pg = require("pg");
 const express = require("express");
 const app = express();
-const bcrypt = require("bcrypt");
-
-const port = process.env.port || 3000;
 
 app.use(express.json())
 app.use(express.static("public_html"));
@@ -55,26 +52,18 @@ app.post("/login", function (req, res) {
             res.status(500).send(); // server error
         });
 
-    bcrypt
-        .hash(plaintextPassword, saltRounds)
-        .then(function (hashedPassword) {
-            connection.query(
-                "INSERT INTO accountInfo (username, hashed_password) VALUES ($1, $2)",
-                [username, hashedPassword]
-            )
-                .then(function (response) {
-                    // account successfully created
-                    res.status(200).send();
-                })
-                .catch(function (error) {
-                    console.log(error);
-                    res.status(500).send(); // server error
-                });
-        })
-        .catch(function (error) {
-            console.log(error);
-            res.status(500).send(); // server error
-        });
+    /*pool.query(
+        "INSERT INTO users (username, hashed_password) VALUES ($1, $2)",
+        [username, plaintextPassword]
+    )
+    .then(function (response) {
+        // account successfully created
+        res.status(200).send();
+    })
+    .catch(function (error) {
+        console.log(error);
+        res.status(500).send(); // server error
+    });*/
 });
 
 app.listen(port, () => {

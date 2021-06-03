@@ -221,15 +221,38 @@ app.post("/blackjack", function (req, res) {
     }
 });
 
+let iTen = document.createElement("img");
+iTen.src = "public_html/symbols/ten.png";
+iTen.dataValue = 1;
+iTen.id = "ten";
+
+let iPlum = document.createElement("img");
+iPlum.src = "public_html/symbols/plum.png";
+iPlum.dataValue = 2;
+iPlum.id = "plum";
+
+let iLemon = document.createElement("img");
+iLemon.src = "public_html/symbols/lemon.png";
+iLemon.dataValue = 3;
+iLemon.id = "lemon";
+
+let iDiamond = document.createElement("img");
+iDiamond.src = "public_html/symbols/diamond.png";
+iDiamond.dataValue = 4;
+iDiamond.id = "diamond";
+
 app.get("/spin", function(req, res) {
     let resJson = {};
 
     for(var i = 0; i < 30; i++){
         let list = [];
+        let rand1 = Math.floor(Math.random() * (5-1) + 1);
+        let rand2 = Math.floor(Math.random() * (5-1) + 1);
+        let rand3 = Math.floor(Math.random() * (5-1) + 1);
 
-        list.push(Math.floor(Math.random() * (5-1) + 1));
-        list.push(Math.floor(Math.random() * (5-1) + 1));
-        list.push(Math.floor(Math.random() * (5-1) + 1));
+        list.push(findImg(rand1));
+        list.push(findImg(rand2));
+        list.push(findImg(rand3));
 
         resJson[i] = list;
     }
@@ -237,6 +260,21 @@ app.get("/spin", function(req, res) {
     res.status = 200;
     res.json(resJson);
 });
+
+function findImg(num) {
+    if (num === iTen.getAttribute("data-value"){
+        return iTen;
+    }
+    if (num === iPlum.getAttribute("data-value"){
+        return iPlum;
+    }
+    if (num === iLemon.getAttribute("data-value"){
+        return iLemon;
+    }
+    if (num === iDiamond.getAttribute("data-value"){
+        return iDiamond;
+    }
+}
 
 app.post(`/pay/`, (req, res) => {
     console.log(req.body);

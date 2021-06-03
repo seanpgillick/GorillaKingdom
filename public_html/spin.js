@@ -8,17 +8,17 @@ spin.addEventListener("click", function(){
     .then(async function(data){
         console.log(data);
         let size = Object.keys(data).length;
+        document.getElementById("0").append(findImg(data[0][0]));
+        document.getElementById("1").append(findImg(data[0][1]));
+        document.getElementById("2").append(findImg(data[0][2]));
+        document.getElementById("3").append(findImg(data[1][0]));
+        document.getElementById("4").append(findImg(data[1][1]));
+        document.getElementById("5").append(findImg(data[1][2]));
+        document.getElementById("6").append(findImg(data[2][0]));
+        document.getElementById("7").append(findImg(data[2][1]));
+        document.getElementById("8").append(findImg(data[2][2]));
         for(var x = 0; x < 3; x++) {
             let runT = Math.floor(Math.random() * ((size*2) - size) + size);
-            document.getElementById("0").append(findImg(data[0][0]));
-            document.getElementById("1").append(findImg(data[0][1]));
-            document.getElementById("2").append(findImg(data[0][2]));
-            document.getElementById("3").append(findImg(data[1][0]));
-            document.getElementById("4").append(findImg(data[1][1]));
-            document.getElementById("5").append(findImg(data[1][2]));
-            document.getElementById("6").append(findImg(data[2][0]));
-            document.getElementById("7").append(findImg(data[2][1]));
-            document.getElementById("8").append(findImg(data[2][2]));
             for (var i = 0; i < runT; i++){
                 let top = i;
                 let mid;

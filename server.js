@@ -26,6 +26,11 @@ connection.connect(function(err) {
     console.log('Connected to database.');
 });
 
+connection.query('SELECT * FROM `accountInfo`', function (error, results, fields) {
+    console.log("Results from query");
+    console.log(results);
+});
+
 connection.end();
 console.log("Connection closed");
 

@@ -39,7 +39,8 @@ alreadyClicked = false;
 
 //define the login button element and add functionality to it
 let loginButton = document.getElementById("login-button");
-loginButton.addEventListener("click", showGameOptions);
+//loginButton.addEventListener("click", showGameOptions);
+loginButton.addEventListener("click", loginFunc);
 
 let blackjackGame;
 let slotsGame;
@@ -55,6 +56,28 @@ function betSizing(container) {
 
 	container.appendChild(betHeader);
 	container.appendChild(depositBox);
+}
+
+function loginFunc(){
+	let usernameInput = document.getElementById("username");
+	let passwordInput = document.getElementById("password")
+	fetch("/login", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+			username: usernameInput.value,
+			plaintextPassword: passwordInput.value,
+		})
+	}).then(function (response) {
+		if (response.status === 200) {
+			console.log("Success");
+			showGameOptions();
+		} else {
+			console.log("Failure");
+		}
+	});
 }
 
 function showGameOptions() {

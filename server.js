@@ -26,12 +26,8 @@ connection.connect(function(err) {
     console.log('Connected to database.');
 });
 
-/*connection.query('SELECT * FROM `accountInfo`', function (error, results, fields) {
-    console.log("Results from query");
-    console.log(results);
-});*/
-
 app.post("/login", function (req, res) {
+    console.log(connection);
     let username = req.body.username;
     let plaintextPassword = req.body.plaintextPassword;
     

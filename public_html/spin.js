@@ -149,19 +149,19 @@ function findImg(num) {
     iDiamond.value = "4";
     iDiamond.id = "diamond";
     
-    if (number == parseInt(iTen.getAttribute("value"))) {
+    if (number === parseInt(iTen.getAttribute("value"))) {
         return iTen;
     }
     
-    if (number == parseInt(iPlum.getAttribute("value"))) {
+    if (number === parseInt(iPlum.getAttribute("value"))) {
         return iPlum;
     }
     
-    if (number == parseInt(iLemon.getAttribute("value"))) {
+    if (number === parseInt(iLemon.getAttribute("value"))) {
         return iLemon;
     }
     
-    if (number == parseInt(iDiamond.getAttribute("value"))) {
+    if (number === parseInt(iDiamond.getAttribute("value"))) {
         return iDiamond;
     }
     

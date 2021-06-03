@@ -61,8 +61,7 @@ function betSizing(container) {
 function loginFunc(){
 	let usernameInput = document.getElementById("usernameInput");
 	let passwordInput = document.getElementById("passwordInput");
-	console.log(usernameInput.value);
-	console.log(passwordInput.value);
+
 	fetch("/login", {
 		method: "POST",
 		headers: {

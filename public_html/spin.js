@@ -1,5 +1,25 @@
 let spin = document.getElementById("spin");
 
+let iTen = document.createElement("img");
+iTen.src = "symbols/ten.png";
+iTen.dataValue = 1;
+iTen.id = "ten";
+
+let iPlum = document.createElement("img");
+iPlum.src = "symbols/plum.png";
+iPlum.dataValue = 2;
+iPlum.id = "plum";
+
+let iLemon = document.createElement("img");
+iLemon.src = "symbols/lemon.png";
+iLemon.dataValue = 3;
+iLemon.id = "lemon";
+
+let iDiamond = document.createElement("img");
+iDiamond.src = "symbols/diamond.png";
+iDiamond.dataValue = 4;
+iDiamond.id = "diamond";
+
 spin.addEventListener("click", function(){
     let bet = document.getElementById("bet").value;
 
@@ -35,15 +55,15 @@ spin.addEventListener("click", function(){
                 }
 
                 if (x === 0) {
-                    document.getElementById("0").innerText = data[top][x];
-                    document.getElementById("1").innerText = data[top][x+1];
-                    document.getElementById("2").innerText = data[top][x+2];
-                    document.getElementById("3").innerText = data[mid][x];
-                    document.getElementById("4").innerText = data[mid][x+1];
-                    document.getElementById("5").innerText = data[mid][x+2];
-                    document.getElementById("6").innerText = data[bot][x];
-                    document.getElementById("7").innerText = data[bot][x+1];
-                    document.getElementById("8").innerText =  data[bot][x+2];
+                    document.getElementById("0").append(findImg(data[top][x]));
+                    document.getElementById("1").append(findImg(data[top][x+1]));
+                    document.getElementById("2").append(findImg(data[top][x+2]));
+                    document.getElementById("3").append(findImg(data[mid][x]));
+                    document.getElementById("4").append(findImg(data[mid][x+1]));
+                    document.getElementById("5").append(findImg(data[mid][x+2]));
+                    document.getElementById("6").append(findImg(data[bot][x]));
+                    document.getElementById("7").append(findImg(data[bot][x+1]));
+                    document.getElementById("8").append(findImg(data[bot][x+2]))
                 }
 
                 else if (x === 1) {
@@ -104,6 +124,24 @@ spin.addEventListener("click", function(){
         console.error('Error:', error);
     })
 });
+
+function findImg(num) {
+    if (num === iTen.getAttribute("data-value")) {
+        return iTen;
+    }
+    
+    if (num === iPlum.getAttribute("data-value")) {
+        return iPlum;
+    }
+    
+    if (num === iLemon.getAttribute("data-value")) {
+        return iLemon;
+    }
+    
+    if (num === iDiamond.getAttribute("data-value")) {
+        return iDiamond;
+    }
+}
 
 function createTable(rows, cols) {
     let tables = document.getElementById("game-container");

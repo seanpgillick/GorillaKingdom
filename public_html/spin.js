@@ -151,19 +151,19 @@ function findImg(num) {
     console.log("Number", number);
     console.log("Value", iTen.value);
     
-    if (number === parseInt(iTen.getAttribute("value"))) {
+    if (number === parseInt(iTen.value)) {
         return iTen;
     }
     
-    if (number === parseInt(iPlum.getAttribute("value"))) {
+    if (number === parseInt(iPlum.value)) {
         return iPlum;
     }
     
-    if (number === parseInt(iLemon.getAttribute("value"))) {
+    if (number === parseInt(iLemon.value)) {
         return iLemon;
     }
     
-    if (number === parseInt(iDiamond.getAttribute("value"))) {
+    if (number === parseInt(iDiamond.value)) {
         return iDiamond;
     }
     

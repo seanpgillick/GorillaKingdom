@@ -1,8 +1,10 @@
 let spin = document.getElementById("spin");
+var playerbal = 100;
 
 spin.addEventListener("click", function(){
     let bet = document.getElementById("bet").value;
-
+    playerbal = playerbal - bet
+    document.getElementById("balance").innerText = playerbal;
     fetch('/spin')
     .then(response => response.json())
     .then(async function(data){

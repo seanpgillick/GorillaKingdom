@@ -224,6 +224,8 @@ function createTable(rows, cols) {
     document.getElementById("6").append(findImg(3));
     document.getElementById("7").append(findImg(3));
     document.getElementById("8").append(findImg(3));
+    
+    document.getElementById("balance").innerText = playerbal;
 }
 
 function sleep(ms) {

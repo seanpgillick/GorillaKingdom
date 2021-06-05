@@ -11,6 +11,7 @@ var connection = mysql.createConnection({
     user     : "admin",
     password : "p4ssw0rd123",
     port     : "3306",
+    database : "cs375dev"
 });
 
 app.post("/login", function (req, res) {

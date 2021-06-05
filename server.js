@@ -7,11 +7,11 @@ app.use(express.static("public_html"));
 var mysql = require('mysql');
 
 var connection = mysql.createConnection({
-    host     : process.env.RDS_HOSTNAME,
-    user     : process.env.RDS_USERNAME,
-    password : process.env.RDS_PASSWORD,
-    port     : process.env.RDS_PORT,
-    database : 'cs375dev'
+    host     : "aawpkx9tfs32a9.chke9dfcgba6.us-east-2.rds.amazonaws.com",
+    user     : "admin",
+    password : "p4ssw0rd123",
+    port     : "3306",
+    database : "cs375dev"
 });
 
 connection.connect(function(err) {

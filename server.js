@@ -11,7 +11,6 @@ var connection = mysql.createConnection({
     user     : "admin",
     password : "p4ssw0rd123",
     port     : "3306",
-    database : "cs375dev"
 });
 
 connection.connect(function(err) {
@@ -33,7 +32,7 @@ app.post("/login", function (req, res) {
     }
     
     connection.connect();
-    connection.query("INSERT INTO accountInfo (username, hashed_password) VALUES ($1, $2)",
+    connection.query("INSERT INTO cs375dev.accountInfo (username, hashed_password) VALUES ($1, $2)",
              [username, plaintextPassword]
     )
     .then(function (response) {

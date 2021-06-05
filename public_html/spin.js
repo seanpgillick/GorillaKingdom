@@ -3,7 +3,7 @@ var playerbal = 100;
 
 spin.addEventListener("click", function(){
     let bet = document.getElementById("bet").value;
-    playerbal = playerbal - bet
+    playerbal = (playerbal - bet).toFixed(2);
     document.getElementById("balance").innerText = playerbal;
     fetch('/spin')
     .then(response => response.json())
@@ -127,6 +127,7 @@ spin.addEventListener("click", function(){
             console.log(data)
             document.getElementById("payout").innerText = data.payout;
             if(data.payout > 0) {
+                playerbal = (playerbal + data.payout).toFixed(2);
                 for(var x = 0; x < 10; x++){
                     for(var i = 0; i < data.lines.length; i++){
                         let symbol = document.getElementById(data.lines[i]).firstChild;
@@ -141,6 +142,7 @@ spin.addEventListener("click", function(){
                     }
                 }
             }
+            document.getElementById("balance").innerText = playerbal;
         })
         .catch((error) => {
             console.error('Error', error);

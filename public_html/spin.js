@@ -127,7 +127,7 @@ spin.addEventListener("click", function(){
             console.log(data)
             document.getElementById("payout").innerText = data.payout;
             if(data.payout > 0) {
-                playerbal = playerbal + parseFloat(data.payout);
+                playerbal =  (parseFloat(playerbal) + parseFloat(data.payout)).toFixed(2);
                 for(var x = 0; x < 10; x++){
                     for(var i = 0; i < data.lines.length; i++){
                         let symbol = document.getElementById(data.lines[i]).firstChild;

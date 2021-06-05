@@ -17,9 +17,9 @@ var connection = mysql.createConnection({
 app.post("/login", function (req, res) {
     let accountInfo = [[req.body.username, req.body.plaintextPassword]];
     
-    if (!(typeof username === 'string') || !(typeof plaintextPassword === 'string') || username.length < 1 || plaintextPassword.length < 4){
+    /*if (!(typeof username === 'string') || !(typeof plaintextPassword === 'string') || username.length < 1 || plaintextPassword.length < 4){
         res.status(401).send();
-    }
+    }*/
     
     connection.query("INSERT INTO accountInfo (username, hashed_password) VALUES ?;", [accountInfo], function (err, result) {
         if (err) {

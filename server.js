@@ -13,37 +13,23 @@ var connection = mysql.createConnection({
     port     : "3306",
 });
 
-connection.connect(function(err) {
-    if (err) {
-        console.error('Database connection failed: ' + err.stack);
-        return;
-    }
-    console.log('Connected to database.');
-});
-connection.end();
-
 app.post("/login", function (req, res) {
-    console.log(connection);
-    let username = req.body.username;
-    let plaintextPassword = req.body.plaintextPassword;
+    let accountInfo = [[req.body.username, req.body.plaintextPassword]];
     
     if (!(typeof username === 'string') || !(typeof plaintextPassword === 'string') || username.length < 1 || plaintextPassword.length < 4){
         res.status(401).send();
     }
     
-    connection.connect();
-    connection.query("INSERT INTO cs375dev.accountInfo (username, hashed_password) VALUES ($1, $2)",
-             [username, plaintextPassword]
-    )
-    .then(function (response) {
-        // account successfully created
-        res.status(200).send();
-    })
-    .catch(function (error) {
-        console.log(error);
-        res.status(500).send(); // server error
+    connection.query("INSERT INTO accountInfo (username, hashed_password) VALUES ?;", [accountInfo], function (err, result) {
+        if (err) {
+            console.error('Failed to insert: ' + err.stack);
+            res.status(500).send();
+        }
+        else{
+            console.log('Inserted into database.');
+            res.status(200).send();
+        }
     });
-    connection.end();
     
     /*connection.query("SELECT username FROM accountInfo WHERE username = $1", [
         username,

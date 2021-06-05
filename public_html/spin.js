@@ -211,6 +211,15 @@ function createTable(rows, cols) {
     tabObj.style.marginLeft = "auto";
     tabObj.style.marginRight = "auto";
     tables.append(tabObj);
+    document.getElementById("0").append(findImg(1));
+    document.getElementById("1").append(findImg(1));
+    document.getElementById("2").append(findImg(1));
+    document.getElementById("3").append(findImg(2));
+    document.getElementById("4").append(findImg(4));
+    document.getElementById("5").append(findImg(2));
+    document.getElementById("6").append(findImg(3));
+    document.getElementById("7").append(findImg(3));
+    document.getElementById("8").append(findImg(3));
 }
 
 function sleep(ms) {

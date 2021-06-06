@@ -21,7 +21,19 @@ app.post("/login", function (req, res) {
         res.status(401).send();
     }*/
     
-    connection.query("INSERT INTO accountInfo (username, hashed_password) VALUES ?;", [accountInfo], function (err, result) {
+    connection.query("SELECT username FROM accountInfo WHERE username = $1", [username])
+        .then(function (response) {
+            if (!(response.rows.length === 0)) {
+                // username exists
+                return res.status(401).send();
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+            res.status(500).send(); // server error
+        });
+    
+    /*connection.query("INSERT INTO accountInfo (username, hashed_password) VALUES ?;", [accountInfo], function (err, result) {
         if (err) {
             console.error('Failed to insert: ' + err.stack);
             res.status(500).send();
@@ -31,7 +43,7 @@ app.post("/login", function (req, res) {
             res.status(200).send();
         }
     });
-    
+    */
     /*connection.query("SELECT username FROM accountInfo WHERE username = $1", [
         username,
     ])

@@ -161,7 +161,7 @@ spin.addEventListener("click", function(){
 });
 
 function checkBal(){
-    return (playerbal > 0);
+    return (playerbal <= 0);
 }
 
 function findImg(num) {

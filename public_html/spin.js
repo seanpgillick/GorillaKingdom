@@ -2,6 +2,7 @@ let spin = document.getElementById("spin");
 var playerbal = 100;
 
 spin.addEventListener("click", function(){
+    spin.disabled = true;
     let bet = document.getElementById("bet").value;
     playerbal = (playerbal - bet).toFixed(2);
     document.getElementById("balance").innerText = playerbal;
@@ -111,7 +112,9 @@ spin.addEventListener("click", function(){
                         ];
 
         let board = { "board": responseArr };
-
+        
+        spin.disabled = false;
+       
         fetch(`/pay/?bet=${bet}`, {
             method: 'POST',
             headers: {

@@ -34,6 +34,7 @@ app.post("/login", function (req, res) {
             }
         }
     });
+    
     let saltRounds = 10;
     let hashVal;
     bcrypt.hash(req.body.plaintextPassword, saltRounds, (err, hash) => {
@@ -48,9 +49,11 @@ app.post("/login", function (req, res) {
             connection.query("INSERT INTO accountInfo (username, hashed_password) VALUES ?", [accountInfo], function(err, result){
                 if (err) {
                     console.error('Failed to insert with hash: ' + err);
+                    res.status(500).send();
                 }
                 else{
                     console.log("Inserted with hash");
+                    res.status(200).send();
                 }
             })
         }

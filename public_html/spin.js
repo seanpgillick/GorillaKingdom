@@ -3,6 +3,10 @@ var playerbal = 100;
 
 spin.addEventListener("click", function(){
     spin.disabled = true;
+    if (checkBal()){
+        return;
+        spin.disabled = false;
+    }
     let bet = document.getElementById("bet").value;
     playerbal = (playerbal - bet).toFixed(2);
     document.getElementById("balance").innerText = playerbal;
@@ -155,6 +159,10 @@ spin.addEventListener("click", function(){
         console.error('Error:', error);
     })
 });
+
+function checkBal(){
+    return (playerbal > 0);
+}
 
 function findImg(num) {
     let number = parseInt(num);

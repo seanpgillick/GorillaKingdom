@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const express = require("express");
 const app = express();
 const port = process.env.port || 3000;
@@ -28,59 +29,33 @@ app.post("/login", function (req, res) {
         }
         else{
             if (result.length > 0){
-                console.log(result);
+                console.log("Found username in the database.");
                 res.status(200).send();
             }
-            else{
-                console.log("Not found");
-            }
         }
     });
-    
-    /*connection.query("INSERT INTO accountInfo (username, hashed_password) VALUES ?;", [accountInfo], function (err, result) {
+    let saltRounds = 10;
+    let hashVal;
+    bcrypt.hash(req.body.plaintextPassword, saltRounds, (err, hash) => {
         if (err) {
-            console.error('Failed to insert: ' + err.stack);
-            res.status(500).send();
+            console.error('Failed to bcrypt: ' + err);
         }
         else{
-            console.log('Inserted into database.');
-            res.status(200).send();
+            hashVal = hash;
+            console.log("HASH: "+ hashVal);
+            let accountInfo = [[req.body.username, hashVal]];
+            console.log(accountInfo);
+            connection.query("INSERT INTO accountInfo (username, hashed_password) VALUES ?", [accountInfo], function(err, result){
+                if (err) {
+                    console.error('Failed to insert with hash: ' + err);
+                }
+                else{
+                    console.log("Inserted with hash");
+                }
+            })
         }
-    });
-    */
-    /*connection.query("SELECT username FROM accountInfo WHERE username = $1", [
-        username,
-    ])
-        .then(function (response) {
-            if (!(response.rows.length === 0)) {
-                // username exists
-                return res.status(401).send();
-            }
-        })
-        .catch(function (error) {
-            console.log(error);
-            res.status(500).send(); // server error
-        });
-    bcrypt
-        .hash(plaintextPassword, saltRounds)
-        .then(function (hashedPassword) {
-            connection.query(
-                "INSERT INTO accountInfo (username, hashed_password) VALUES ($1, $2)",
-                [username, hashedPassword]
-            )
-                .then(function (response) {
-                    // account successfully created
-                    res.status(200).send();
-                })
-                .catch(function (error) {
-                    console.log(error);
-                    res.status(500).send(); // server error
-                });
-        })
-        .catch(function (error) {
-            console.log(error);
-            res.status(500).send(); // server error
-        });*/
+    })
+    
 });
 app.listen(port, () => {
     console.log(`Listening at port: ${port}!!! :)`);

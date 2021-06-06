@@ -4,8 +4,8 @@ var playerbal = 100;
 spin.addEventListener("click", function(){
     spin.disabled = true;
     if (checkBal()){
-        return;
         spin.disabled = false;
+        return;
     }
     let bet = document.getElementById("bet").value;
     playerbal = (playerbal - bet).toFixed(2);

@@ -21,17 +21,21 @@ app.post("/login", function (req, res) {
         res.status(401).send();
     }*/
     
-    connection.query("SELECT username FROM accountInfo WHERE username = $1", [username])
-        .then(function (response) {
-            if (!(response.rows.length === 0)) {
-                // username exists
-                return res.status(401).send();
+    connection.query("SELECT username FROM accountInfo WHERE username = ?", [req.body.username], function(err, result){
+        if (err) {
+            console.error('Failed to search: ' + err);
+            res.status(500).send();
+        }
+        else{
+            if (result.length > 0){
+                console.log(result);
+                res.status(200).send();
             }
-        })
-        .catch(function (error) {
-            console.log(error);
-            res.status(500).send(); // server error
-        });
+            else{
+                console.log("Not found");
+            }
+        }
+    });
     
     /*connection.query("INSERT INTO accountInfo (username, hashed_password) VALUES ?;", [accountInfo], function (err, result) {
         if (err) {

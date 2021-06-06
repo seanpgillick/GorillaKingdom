@@ -1,7 +1,8 @@
 {
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "express": "^4.17.1",
-    "mysql": "latest",
+    "mysql": "^2.18.1",
     "nodemon": "^2.0.7",
     "pg": "^8.3.0"
   },

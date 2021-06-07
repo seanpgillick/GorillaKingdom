@@ -68,6 +68,7 @@ document.getElementById("startGame").addEventListener("click", function () {
     .then(data => {
         if (data.validBet == true){
             let hiddenHand = [data.dealerCards[0]];
+		console.log(hiddenHand);
             hiddenHand.push("gray_back");
             if (data.wasBlackjackHit == true){
                 printUserHand(data.userCards, data.userSum);

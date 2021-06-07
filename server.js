@@ -27,10 +27,8 @@ app.post("/login", function (req, res) {
             }
             else{
                 hashVal = hash;
-                console.log("HASH: "+ hashVal);
-                let accountInfo = [[req.body.username, hashVal]];
-                console.log(accountInfo);
-            
+                let loginToken = Math.floor(Math.random() * 9999999999) + 1000000000;
+
                 connection.query("SELECT hashed_password FROM accountInfo WHERE username = ?", [req.body.username], function(err, result){
                     if (err) {
                         console.error('Failed to search: ' + err);
@@ -41,8 +39,17 @@ app.post("/login", function (req, res) {
                         if (storedHash.length > 0){
                             bcrypt.compare(req.body.plaintextPassword, storedHash, function(err, hashMatch) {
                                 if (hashMatch){
-                                    //passwords match
-                                    res.status(200).send();
+                                    //passwords match, insert a login token
+                                    connection.query("Update accountInfo SET loginToken = ? WHERE username = ?", [loginToken, req.body.username], function(err, result){
+                                        if (err) {
+                                            console.error('Failed to insert token: ' + err);
+                                            res.status(500).send();
+                                        }
+                                        else{
+                                            res.status(200).send();
+                                        }
+                                    });
+
                                 }
                                 else{
                                     res.status(501).send("Invalid Password");
@@ -52,8 +59,9 @@ app.post("/login", function (req, res) {
                     }
                     //username not in db
                     else{
-                        connection.query("INSERT INTO accountInfo (username, hashed_password) VALUES ?", [accountInfo], function(err, result){
+                        connection.query("INSERT INTO accountInfo (username, hashed_password, loginToken) VALUES ?", [[req.body.username, hashVal, loginToken]], function(err, result){
                             if (err) {
+                                console.log("FAILED insert with new account token")
                                 res.status(500).send();
                             }
                             else{
@@ -69,7 +77,7 @@ app.post("/login", function (req, res) {
 
 app.post("/deposit", function (req, res) {
     let dbBal;
-    connection.query("SELECT balance FROM accountInfo WHERE username = ?", [req.body.username], function(err, result){
+    connection.query("SELECT * FROM accountInfo WHERE username = ?", [req.body.username], function(err, result){
         if (err) {
             console.error('Failed to search: ' + err);
             res.status(500).send();
@@ -79,14 +87,16 @@ app.post("/deposit", function (req, res) {
         if (result.length > 0){
             dbBal = parseFloat(result[0]["balance"]);
             dbBal += parseFloat(req.body.deposit);
-
+            dbToken = result[0]["loginToken"];
+            
             connection.query("Update accountInfo SET balance = ? WHERE username = ?", [dbBal, req.body.username], function(err, result){
                 if (err) {
                     console.error('Failed to search: ' + err);
                     res.status(500).send();
                 }
                 else{
-                    res.status(200).send();
+                    depositReturn = {"username" : req.body.username, "balance" : dbBal, "dbToken" : dbToken};
+                    res.status(200).json(depositReturn);
                 }
             });
         }

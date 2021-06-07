@@ -244,5 +244,9 @@ function sleep(ms) {
   }
 
 window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const myParam = urlParams.get('myParam');
+
+    console.log(myParam);
     createTable(3,3);
 }

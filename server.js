@@ -22,19 +22,6 @@ app.post("/login", function (req, res) {
         res.status(401).send();
     }*/
     
-    connection.query("SELECT username FROM accountInfo WHERE username = ?", [req.body.username], function(err, result){
-        if (err) {
-            console.error('Failed to search: ' + err);
-            res.status(500).send();
-        }
-        else{
-            if (result.length > 0){
-                console.log("Found username in the database.");
-                res.status(200).send();
-            }
-        }
-    });
-    
     let saltRounds = 10;
     let hashVal;
     bcrypt.hash(req.body.plaintextPassword, saltRounds, (err, hash) => {
@@ -46,16 +33,32 @@ app.post("/login", function (req, res) {
             console.log("HASH: "+ hashVal);
             let accountInfo = [[req.body.username, hashVal]];
             console.log(accountInfo);
-            connection.query("INSERT INTO accountInfo (username, hashed_password) VALUES ?", [accountInfo], function(err, result){
+            
+            connection.query("SELECT * FROM accountInfo WHERE username = ? AND hashed_password = ?", [req.body.username, hashVal], function(err, result){
                 if (err) {
-                    console.error('Failed to insert with hash: ' + err);
+                    console.error('Failed to search: ' + err);
                     res.status(500).send();
                 }
                 else{
-                    console.log("Inserted with hash");
-                    res.status(200).send();
+                    if (result.length > 0){
+                        console.log("Found username in the database.");
+                        res.status(200).send();
+                        //database query for adding balance
+                    }
+                    else{
+                        connection.query("INSERT INTO accountInfo (username, hashed_password) VALUES ?", [accountInfo], function(err, result){
+                            if (err) {
+                                console.error('Failed to insert with hash: ' + err);
+                                res.status(500).send();
+                            }
+                            else{
+                                console.log("Inserted with hash");
+                                res.status(200).send();
+                            }
+                        })
+                    }
                 }
-            })
+            });
         }
     })
     

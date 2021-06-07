@@ -79,7 +79,7 @@ document.getElementById("startGame").addEventListener("click", function () {
                 document.getElementById("hitButton").disabled = false;
                 document.getElementById("standButton").disabled = false;
                 printUserHand(data.userCards, data.userSum);
-                printDealerHand(hiddenHand, data.dealerVal[0]);
+                printDealerHand(hiddenHand, data.dSumStart);
             }
         }
     });

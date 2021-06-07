@@ -8,8 +8,40 @@ let betElement = document.getElementById("betAmount");
 
 let balElement = document.getElementById("currentBal");
 ///////NEEDS TO CHANGE WITH DB////////////
-let tmpBal = 100;
-balElement.innerText = tmpBal;
+let username = getParameterByName('user');
+let token = getParameterByName('token');
+
+//get starting bal
+getBalance(username,token);
+
+function getBalance(user, dbToken){
+    fetch("/getBal", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            username: user,
+            token: dbToken
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        balElement.innerText = data.balance;
+        console.log("In getBalance");
+        console.log(data);
+    });
+}
+
+//access query string
+function getParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
 
 function printUserHand(userCards, userSum){
     while(userBody.firstChild){

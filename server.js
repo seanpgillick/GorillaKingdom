@@ -136,10 +136,11 @@ app.post("/blackjack", function (req, res) {
             tmpBal -= Number(betAmount);
             wasBlackjackHit = true;
         }
+        let dSumStart = dealerVals[0];
         userSum = userVals.reduce((a, b) => a + b, 0);
         dealerSum = dealerVals.reduce((a, b) => a + b, 0);
         /////NEEDS TO CHANGE WITH DB/////
-        let cardReturn = {"userCards": userCards, "userSum": userSum, "dealerCards": dealerCards, "dealerSum": dealerSum, "wasBlackjackHit": wasBlackjackHit, "endBalance": tmpBal, "validBet":true};
+        let cardReturn = {"userCards": userCards, "userSum": userSum, "dSumStart" : dSumStart, "dealerCards": dealerCards, "dealerSum": dealerSum, "wasBlackjackHit": wasBlackjackHit, "endBalance": tmpBal, "validBet":true};
         res.status(200).json(cardReturn);
     }
     else if( action == "hit"){

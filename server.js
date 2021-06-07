@@ -107,6 +107,23 @@ app.post("/deposit", function (req, res) {
     });
 });
 
+app.post("/getBal", function (req, res) {
+    let dbBal;
+    let dbToken;
+    connection.query("SELECT balance FROM accountInfo WHERE username = ? AND loginToken = ?", [req.body.username, req.body.token], function(err, result){
+        if (err) {
+            console.error('Failed to pull balance: ' + err);
+            res.status(500).send();
+        }
+        console.log(result[0]);
+
+        if (result.length > 0){
+            dbBal = parseFloat(result[0]["balance"]);            
+            res.status(200).json({"balance" : dbBal});
+        }
+    });
+});
+
 app.listen(port, () => {
     console.log(`Listening at port: ${port}!!! :)`);
 }); 

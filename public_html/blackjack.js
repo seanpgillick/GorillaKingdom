@@ -7,7 +7,6 @@ let matchResults = document.getElementById("matchResults");
 let betElement = document.getElementById("betAmount");
 
 let balElement = document.getElementById("currentBal");
-///////NEEDS TO CHANGE WITH DB////////////
 let username = getParameterByName('user');
 let token = getParameterByName('token');
 
@@ -28,8 +27,6 @@ function getBalance(user, dbToken){
     .then(response => response.json())
     .then(data => {
         balElement.innerText = data.balance;
-        console.log("In getBalance");
-        console.log(data);
     });
 }
 
@@ -78,6 +75,7 @@ function printDealerHand(dealerCards, dealerSum){
 
 	dealerBody.append(dealerTr);
     dealerSumElement.innerText = dealerSum;
+    getBalance(username, token);
 }
 
 document.getElementById("hitButton").disabled = true;
@@ -93,7 +91,9 @@ document.getElementById("startGame").addEventListener("click", function () {
 		},
 		body: JSON.stringify({
 			action: "startGame",
-            betAmount: betElement.value
+            betAmount: betElement.value,
+            user : username,
+            dbToken : token
 		})
 	})
     .then(response => response.json())
@@ -104,7 +104,6 @@ document.getElementById("startGame").addEventListener("click", function () {
             if (data.wasBlackjackHit == true){
                 printUserHand(data.userCards, data.userSum);
                 printDealerHand(data.dealerCards, data.dealerSum);
-                currentBal.innerText = data.endBalance;
             }
             else{
                 document.getElementById("hitButton").disabled = false;
@@ -125,17 +124,17 @@ document.getElementById("hitButton").addEventListener("click", function () {
 		},
 		body: JSON.stringify({
 			action: "hit",
-            betAmount: betElement.value
+            betAmount: betElement.value,
+            user : username,
+            dbToken : token
 		})
 	})
     .then(response => response.json())
     .then(data => {
-        console.log(data);
         printUserHand(data.userCards, data.userSum);
 
         if (data.userSum > 21){
             printDealerHand(data.dealerCards, data.dealerSum);
-            currentBal.innerText = data.endBalance;
             document.getElementById("hitButton").disabled = true;
             document.getElementById("standButton").disabled = true;
         }
@@ -151,14 +150,14 @@ document.getElementById("standButton").addEventListener("click", function () {
 		},
 		body: JSON.stringify({
 			action: "stand",
-            betAmount: betElement.value
+            betAmount: betElement.value,
+            user : username,
+            dbToken : token
 		})
 	})
     .then(response => response.json())
     .then(data => {
-        console.log(data);
         printDealerHand(data.dealerCards, data.dealerSum);
-        currentBal.innerText = data.endBalance;
         document.getElementById("hitButton").disabled = true;
         document.getElementById("standButton").disabled = true;
     });

@@ -245,8 +245,8 @@ function sleep(ms) {
 
 window.onload = function() {
     const urlParams = new URLSearchParams(window.location.search);
-    const myParam = urlParams.get('myParam');
+    const myParam = urlParams.get('burger');
 
-    console.log(myParam);
+    console.log("qString", myParam);
     createTable(3,3);
 }

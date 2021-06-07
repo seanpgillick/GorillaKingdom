@@ -142,25 +142,31 @@ else {
 }
 
 function openBlackjack() {
-	depositMoney();
-	window.open("http://gorillakingdom-env-1.eba-yrqq4xm3.us-east-2.elasticbeanstalk.com/blackjack.html");
+	depositMoney().then(function(data) {
+		console.log(data);
+		window.open('http://gorillakingdom-env-1.eba-yrqq4xm3.us-east-2.elasticbeanstalk.com/blackjack.html?user='+data.username+'&token='+data.dbToken);
+	})
 }
 
 function openSlots() {
-	depositMoney();
-	window.open("http://gorillakingdom-env-1.eba-yrqq4xm3.us-east-2.elasticbeanstalk.com/spin.html");
+	depositMoney().then(function(data) {
+		console.log(data);
+		window.open('http://gorillakingdom-env-1.eba-yrqq4xm3.us-east-2.elasticbeanstalk.com/spin.html?user='+data.username+'&token='+data.dbToken);
+	})
 }
 
 function openHorseRacing() {
-	depositMoney();
-	window.open("http://gorillakingdom-env-1.eba-yrqq4xm3.us-east-2.elasticbeanstalk.com/horse_racing.html");
+	depositMoney().then(function(data) {
+		console.log(data);
+		window.open('http://gorillakingdom-env-1.eba-yrqq4xm3.us-east-2.elasticbeanstalk.com/horse_racing.html?user='+data.username+'&token='+data.dbToken);
+	})
 }
 
 function depositMoney(){
 	let depositAmount = document.getElementById("depositBox").value;
 	usernameInput = document.getElementById("usernameInput");
 
-	fetch("/deposit", {
+	return fetch("/deposit", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
@@ -169,12 +175,13 @@ function depositMoney(){
 			deposit: depositAmount,
 			username: usernameInput.value
 		})
-	}).then(function (response) {
-		if (response.status === 200) {
-			console.log("Deposit Success");
-		} else {
-			console.log("Deposit Failure");
-		}
+	})
+	.then(function(response){
+		return response.json();
+	})
+	.then(function(data) {
+		var accountInfo = data;
+		return accountInfo;
 	});
 }
 

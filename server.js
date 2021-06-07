@@ -16,53 +16,57 @@ var connection = mysql.createConnection({
 });
 
 app.post("/login", function (req, res) {
-    let accountInfo = [[req.body.username, req.body.plaintextPassword]];
-    
-    /*if (!(typeof username === 'string') || !(typeof plaintextPassword === 'string') || username.length < 1 || plaintextPassword.length < 4){
-        res.status(401).send();
-    }*/
-    
-    let saltRounds = 10;
+    let accountInfo = [[req.body.username, req.body.plaintextPassword]]; 
+    const saltRounds = 10;
     let hashVal;
-    bcrypt.hash(req.body.plaintextPassword, saltRounds, (err, hash) => {
-        if (err) {
-            console.error('Failed to bcrypt: ' + err);
-        }
-        else{
-            hashVal = hash;
-            console.log("HASH: "+ hashVal);
-            let accountInfo = [[req.body.username, hashVal]];
-            console.log(accountInfo);
+
+    bcrypt.genSalt(saltRounds, function(err, salt) {
+        bcrypt.hash(req.body.plaintextPassword, salt, (err, hash) => {
+            if (err) {
+                console.error('Failed to bcrypt: ' + err);
+            }
+            else{
+                hashVal = hash;
+                console.log("HASH: "+ hashVal);
+                let accountInfo = [[req.body.username, hashVal]];
+                console.log(accountInfo);
             
-            connection.query("SELECT * FROM accountInfo WHERE username = ? AND hashed_password = ?", [req.body.username, hashVal], function(err, result){
-                if (err) {
-                    console.error('Failed to search: ' + err);
-                    res.status(500).send();
-                }
-                else{
-                    if (result.length > 0){
-                        console.log("Found username in the database.");
-                        res.status(200).send();
-                        //database query for adding balance
+                connection.query("SELECT hashed_password FROM accountInfo WHERE username = ?", [req.body.username], function(err, result){
+                    if (err) {
+                        console.error('Failed to search: ' + err);
+                        res.status(500).send();
                     }
+                    else if (result.length > 0) {
+                        let storedHash = result[0]["hashed_password"];
+                        if (storedHash.length > 0){
+                            bcrypt.compare(req.body.plaintextPassword, storedHash, function(err, hashMatch) {
+                                if (hashMatch){
+                                    //passwords match
+                                    res.status(200).send();
+                                }
+                                else{
+                                    res.status(501).send("Invalid Password");
+                                }
+                            });
+                        }
+                    }
+                    //username not in db
                     else{
                         connection.query("INSERT INTO accountInfo (username, hashed_password) VALUES ?", [accountInfo], function(err, result){
                             if (err) {
-                                console.error('Failed to insert with hash: ' + err);
                                 res.status(500).send();
                             }
                             else{
-                                console.log("Inserted with hash");
                                 res.status(200).send();
                             }
                         })
                     }
-                }
-            });
-        }
-    })
-    
+                });
+            }
+        })
+    });
 });
+
 app.listen(port, () => {
     console.log(`Listening at port: ${port}!!! :)`);
 }); 

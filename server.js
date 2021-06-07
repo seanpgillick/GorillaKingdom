@@ -67,6 +67,32 @@ app.post("/login", function (req, res) {
     });
 });
 
+app.post("/deposit", function (req, res) {
+    let dbBal;
+    connection.query("SELECT balance FROM accountInfo WHERE username = ?", [req.body.username], function(err, result){
+        if (err) {
+            console.error('Failed to search: ' + err);
+            res.status(500).send();
+        }
+        console.log(result[0]);
+
+        if (result.length > 0){
+            dbBal = parseFloat(result[0]["balance"]);
+            dbBal += parseFloat(req.body.deposit);
+
+            connection.query("Update accountInfo SET balance = ? WHERE username = ?", [dbBal, req.body.username], function(err, result){
+                if (err) {
+                    console.error('Failed to search: ' + err);
+                    res.status(500).send();
+                }
+                else{
+                    res.status(200).send();
+                }
+            });
+        }
+    });
+});
+
 app.listen(port, () => {
     console.log(`Listening at port: ${port}!!! :)`);
 }); 

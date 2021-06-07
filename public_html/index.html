@@ -141,17 +141,41 @@ else {
 }
 
 function openBlackjack() {
+	depositMoney();
 	window.open("http://gorillakingdom-env-1.eba-yrqq4xm3.us-east-2.elasticbeanstalk.com/blackjack.html");
 }
 
 function openSlots() {
-	window.open("http://gorillakingdom-env-1.eba-yrqq4xm3.us-east-2.elasticbeanstalk.com/spin.html?burger=burg");
+	depositMoney();
+	window.open("http://gorillakingdom-env-1.eba-yrqq4xm3.us-east-2.elasticbeanstalk.com/spin.html");
 }
 
 function openHorseRacing() {
+	depositMoney();
 	window.open("http://gorillakingdom-env-1.eba-yrqq4xm3.us-east-2.elasticbeanstalk.com/horse_racing.html");
 }
 
+function depositMoney(){
+	let depositAmount = document.getElementById("depositBox").value;
+	usernameInput = document.getElementById("usernameInput");
+
+	fetch("/deposit", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+			deposit: depositAmount,
+			username: usernameInput.value
+		})
+	}).then(function (response) {
+		if (response.status === 200) {
+			console.log("Deposit Success");
+		} else {
+			console.log("Deposit Failure");
+		}
+	});
+}
 
 </script>
 

@@ -68,7 +68,7 @@ document.getElementById("startGame").addEventListener("click", function () {
     .then(data => {
         if (data.validBet == true){
             let hiddenHand = [data.dealerCards[0]];
-		console.log(hiddenHand);
+		console.log("Hidden" data.dealerVal[0]);
             hiddenHand.push("gray_back");
             if (data.wasBlackjackHit == true){
                 printUserHand(data.userCards, data.userSum);
@@ -79,7 +79,7 @@ document.getElementById("startGame").addEventListener("click", function () {
                 document.getElementById("hitButton").disabled = false;
                 document.getElementById("standButton").disabled = false;
                 printUserHand(data.userCards, data.userSum);
-                printDealerHand(hiddenHand);
+                printDealerHand(hiddenHand, data.dealerVal[0]);
             }
         }
     });

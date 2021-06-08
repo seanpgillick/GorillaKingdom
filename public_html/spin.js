@@ -1,5 +1,27 @@
 let spin = document.getElementById("spin");
-var playerbal = 100;
+let balElement = document.getElementById("balance");
+const urlParams = new URLSearchParams(window.location.search);
+const username = urlParams.get('user');
+const token = urlParams.get('token');
+
+getBalance(username,token);
+
+function getBalance(user, dbToken){
+    fetch("/getBal", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            username: user,
+            token: dbToken
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        balElement.innerText = data.balance;
+    });
+}
 
 spin.addEventListener("click", function(){
     spin.disabled = true;
@@ -8,8 +30,8 @@ spin.addEventListener("click", function(){
         return;
     }
     let bet = document.getElementById("bet").value;
-    playerbal = (playerbal - bet).toFixed(2);
-    document.getElementById("balance").innerText = playerbal;
+    balElement.innerText = (parseFloat(balElement.innerText) - bet).toFixed(2);
+
     fetch('/spin')
     .then(response => response.json())
     .then(async function(data){
@@ -161,7 +183,7 @@ spin.addEventListener("click", function(){
 });
 
 function checkBal(){
-    return (playerbal <= 0);
+    return (balElement.value <= 0);
 }
 
 function findImg(num) {
@@ -244,9 +266,5 @@ function sleep(ms) {
   }
 
 window.onload = function() {
-//    const urlParams = new URLSearchParams(window.location.search);
-//    const myParam = urlParams.get('burger');
-//    For username
-//    console.log("qString", myParam);
     createTable(3,3);
 }

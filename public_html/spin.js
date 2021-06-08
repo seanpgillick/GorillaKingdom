@@ -30,11 +30,19 @@ spin.addEventListener("click", function(){
         return;
     }
     let bet = document.getElementById("bet").value;
-    balElement.innerText = (parseFloat(balElement.innerText) - bet).toFixed(2);
-
-    fetch('/spin')
+    
+    fetch('/spin', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({"bet": bet, "user": username, "dbToken": token});
+    })
     .then(response => response.json())
     .then(async function(data){
+        if(data.hasOwnProperty("validBet")){
+            return;
+        }
         console.log(data);
         let size = Object.keys(data).length;
         if (document.getElementById("0").childElementCount > 0) {
@@ -136,8 +144,6 @@ spin.addEventListener("click", function(){
                             [document.getElementById("3").firstChild.value, document.getElementById("4").firstChild.value, document.getElementById("5").firstChild.value],
                             [document.getElementById("6").firstChild.value, document.getElementById("7").firstChild.value, document.getElementById("8").firstChild.value]
                         ];
-
-        let board = { "board": responseArr };
         
         spin.disabled = false;
        
@@ -147,16 +153,20 @@ spin.addEventListener("click", function(){
                 'Content-Type': 'application/json',
             },
                             
-            body: JSON.stringify(board),
+            body: JSON.stringify({
+                "board": responseArr, "user": username, "dbToken": token
+            }),
         })
         .then(response => response.json())
         .then(async function(data){
+            if(!data.validBet){
+                return;
+            }
             let iWin = document.createElement("img");
             iWin.src = "symbols/win.png";
             console.log(data)
             document.getElementById("payout").innerText = data.payout;
             if(data.payout > 0) {
-                let playerbal =  (parseFloat(0) + parseFloat(data.payout)).toFixed(2);
                 for(var x = 0; x < 10; x++){
                     for(var i = 0; i < data.lines.length; i++){
                         let symbol = document.getElementById(data.lines[i]).firstChild;
@@ -171,7 +181,7 @@ spin.addEventListener("click", function(){
                     }
                 }
             }
-            document.getElementById("balance").innerText = playerbal;
+            document.getElementById("balance").innerText = data.dbBalance;
         })
         .catch((error) => {
             console.error('Error', error);

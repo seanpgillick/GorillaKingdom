@@ -315,9 +315,22 @@ app.post("/blackjack", function (req, res) {
     });
 });
 
-app.get("/spin", function(req, res) {
+app.post("/spin", function(req, res) {
+    connection.query("SELECT balance FROM accountInfo WHERE username = ? AND loginToken = ?", [req.body.user, req.body.dbToken], function(err, result){
+        if(err) {
+            console.log(err);
+        }
+        if (result.length > 0){
+            dbBalance = parseFloat(result[0]["balance"]);
+            betAmount = parseFloat(req.body.bet);
+                        
+            if (betAmount > dbBalance){
+                res.status(403).json({"validBet":false}); 
+            }
+        }
+    }
     let resJson = {};
-    for(var i = 0; i < 30; i++){
+    for(var i = 1; i < 31; i++){
         let list = [];
         let rand1 = Math.floor(Math.random() * (5-1) + 1);
         let rand2 = Math.floor(Math.random() * (5-1) + 1);
@@ -331,35 +344,53 @@ app.get("/spin", function(req, res) {
     res.status = 200;
     res.json(resJson);
 });
-app.post(`/pay/`, (req, res) => {
-    console.log(req.body);
-    console.log(req.query.bet);
-    let boardArray = req.body.board;
-    let bet = req.query.bet;
-    let payout = 0;
-    let wLines = [];
-    if (checkH(boardArray, 0)){
-        payout += bet*(boardArray[0][0]**2);
-        wLines.push(0,1,2);
-    }
-    if (checkH(boardArray, 1)){
-        payout += bet*(boardArray[1][0]**2);
-        wLines.push(3,4,5);
-    }
-    if (checkH(boardArray, 2)){
-        payout += bet*(boardArray[2][0]**2);
-        wLines.push(6,7,8);
-    }
-    if (checkDr(boardArray)){
-        payout += bet*(boardArray[0][0]**2);
-        wLines.push(0,4,8);
-    }
-    if(checkDl(boardArray)){
-        payout += bet*(boardArray[2][0]**2);
-        wLines.push(2,4,6);
-    }
-    res.send({"payout": payout, "lines": wLines});
-})
+
+app.post("/pay/", (req, res) => {
+    connection.query("SELECT balance FROM accountInfo WHERE username = ? AND loginToken = ?", [req.body.user, req.body.dbToken], function(err, result){
+        if(err) {
+            console.log(err);
+        }
+        if (result.length > 0){
+            dbBalance = parseFloat(result[0]["balance"]);            
+
+            
+            let boardArray = req.body.board;
+            let bet = req.query.bet;
+            let payout = 0;
+            let wLines = [];
+            if (checkH(boardArray, 0)){
+                payout += bet*(boardArray[0][0]**2);
+                wLines.push(0,1,2);
+            }
+            if (checkH(boardArray, 1)){
+                payout += bet*(boardArray[1][0]**2);
+                wLines.push(3,4,5);
+            }
+            if (checkH(boardArray, 2)){
+                payout += bet*(boardArray[2][0]**2);
+                wLines.push(6,7,8);
+            }
+            if (checkDr(boardArray)){
+                payout += bet*(boardArray[0][0]**2);
+                wLines.push(0,4,8);
+            }
+            if(checkDl(boardArray)){
+                payout += bet*(boardArray[2][0]**2);
+                wLines.push(2,4,6);
+            }
+            dbBalance += (payout-bet);
+            connection.query("Update accountInfo SET balance = ? WHERE username = ?", [dbBalance, req.body.user], function(err, result){
+                if (err) {
+                    console.error('Failed to update slot results: ' + err);
+                    res.status(500).send();
+                }
+            });
+            res.send({"payout": payout, "lines": wLines, "dbBalance": dbBalance});
+        }
+    })
+});
+
+
 function checkH(arr, row){
     return ((arr[row][0] === arr[row][1]) && (arr[row][1] === arr[row][2]));
 }

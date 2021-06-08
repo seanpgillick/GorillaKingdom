@@ -42,6 +42,7 @@ spin.addEventListener("click", function(){
     .then(async function(data){
         console.log("data", data);
         if(data.hasOwnProperty("validBet")){
+            spin.disabled = false;
             return;
         }
         else{

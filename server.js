@@ -330,7 +330,7 @@ app.post("/spin", function(req, res) {
         }
     });
     let resJson = {};
-    for(var i = 1; i < 31; i++){
+    for(var i = 0; i < 30; i++){
         let list = [];
         let rand1 = Math.floor(Math.random() * (5-1) + 1);
         let rand2 = Math.floor(Math.random() * (5-1) + 1);

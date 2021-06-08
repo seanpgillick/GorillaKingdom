@@ -44,146 +44,147 @@ spin.addEventListener("click", function(){
         if(data.hasOwnProperty("validBet")){
             return;
         }
-        console.log(data);
-        let size = Object.keys(data).length;
-        if (document.getElementById("0").childElementCount > 0) {
-            for (var x = 0; x < 9; x ++) {
-                document.getElementById(x).removeChild(document.getElementById(x).firstChild);
+        else{
+            let size = Object.keys(data).length;
+            if (document.getElementById("0").childElementCount > 0) {
+                for (var x = 0; x < 9; x ++) {
+                    document.getElementById(x).removeChild(document.getElementById(x).firstChild);
+                }
             }
-        }
-        document.getElementById("0").append(findImg(data[0][0]));
-        document.getElementById("1").append(findImg(data[0][1]));
-        document.getElementById("2").append(findImg(data[0][2]));
-        document.getElementById("3").append(findImg(data[1][0]));
-        document.getElementById("4").append(findImg(data[1][1]));
-        document.getElementById("5").append(findImg(data[1][2]));
-        document.getElementById("6").append(findImg(data[2][0]));
-        document.getElementById("7").append(findImg(data[2][1]));
-        document.getElementById("8").append(findImg(data[2][2]));
-        for(var x = 0; x < 3; x++) {
-            let runT = Math.floor(Math.random() * ((size*2) - size) + size);
-            for (var i = 0; i < runT; i++){
-                let top = i;
-                let mid;
-                let bot;
-                if (i >= size) {
-                    if (i >= (size*2)){
-                        top = i - (size*2);
+            document.getElementById("0").append(findImg(data[0][0]));
+            document.getElementById("1").append(findImg(data[0][1]));
+            document.getElementById("2").append(findImg(data[0][2]));
+            document.getElementById("3").append(findImg(data[1][0]));
+            document.getElementById("4").append(findImg(data[1][1]));
+            document.getElementById("5").append(findImg(data[1][2]));
+            document.getElementById("6").append(findImg(data[2][0]));
+            document.getElementById("7").append(findImg(data[2][1]));
+            document.getElementById("8").append(findImg(data[2][2]));
+            for(var x = 0; x < 3; x++) {
+                let runT = Math.floor(Math.random() * ((size*2) - size) + size);
+                for (var i = 0; i < runT; i++){
+                    let top = i;
+                    let mid;
+                    let bot;
+                    if (i >= size) {
+                        if (i >= (size*2)){
+                            top = i - (size*2);
+                        }
+                        else {
+                            top = i - size;
+                        }
                     }
+
+                    mid = top - 1;
+                    bot = top - 2;
+
+                    if(mid < 0){
+                        mid = size + mid;
+                    }
+
+                    if(bot < 0){
+                        bot = size + bot;
+                    }
+
+                    if (x === 0) {
+
+                        document.getElementById("0").removeChild(document.getElementById("0").firstChild);
+                        document.getElementById("1").removeChild(document.getElementById("1").firstChild);
+                        document.getElementById("2").removeChild(document.getElementById("2").firstChild);
+                        document.getElementById("3").removeChild(document.getElementById("3").firstChild);
+                        document.getElementById("4").removeChild(document.getElementById("4").firstChild);
+                        document.getElementById("5").removeChild(document.getElementById("5").firstChild);
+                        document.getElementById("6").removeChild(document.getElementById("6").firstChild);
+                        document.getElementById("7").removeChild(document.getElementById("7").firstChild);
+                        document.getElementById("8").removeChild(document.getElementById("8").firstChild);
+
+
+                        document.getElementById("0").append(findImg(data[top][x]));
+                        document.getElementById("1").append(findImg(data[top][x+1]));
+                        document.getElementById("2").append(findImg(data[top][x+2]));
+                        document.getElementById("3").append(findImg(data[mid][x]));
+                        document.getElementById("4").append(findImg(data[mid][x+1]));
+                        document.getElementById("5").append(findImg(data[mid][x+2]));
+                        document.getElementById("6").append(findImg(data[bot][x]));
+                        document.getElementById("7").append(findImg(data[bot][x+1]));
+                        document.getElementById("8").append(findImg(data[bot][x+2]))
+                    }
+
+                    else if (x === 1) {
+                        document.getElementById("1").removeChild(document.getElementById("1").firstChild);
+                        document.getElementById("2").removeChild(document.getElementById("2").firstChild);
+                        document.getElementById("4").removeChild(document.getElementById("4").firstChild);
+                        document.getElementById("5").removeChild(document.getElementById("5").firstChild);
+                        document.getElementById("7").removeChild(document.getElementById("7").firstChild);
+                        document.getElementById("8").removeChild(document.getElementById("8").firstChild);
+
+                        document.getElementById("1").append(findImg(data[top][x]));
+                        document.getElementById("2").append(findImg(data[top][x+1]));
+                        document.getElementById("4").append(findImg(data[mid][x]));
+                        document.getElementById("5").append(findImg(data[mid][x+1]));
+                        document.getElementById("7").append(findImg(data[bot][x]));
+                        document.getElementById("8").append(findImg(data[bot][x+1]));
+                    }
+
                     else {
-                        top = i - size;
+                        document.getElementById("2").removeChild(document.getElementById("2").firstChild);
+                        document.getElementById("5").removeChild(document.getElementById("5").firstChild);
+                        document.getElementById("8").removeChild(document.getElementById("8").firstChild);
+
+                        document.getElementById("2").append(findImg(data[top][x]));
+                        document.getElementById("5").append(findImg(data[mid][x]));
+                        document.getElementById("8").append(findImg(data[bot][x]));
+                    }
+                    await sleep(50);
+                }
+            }
+            console.log(bet);
+
+            let responseArr = [
+                                [document.getElementById("0").firstChild.value, document.getElementById("1").firstChild.value, document.getElementById("2").firstChild.value],
+                                [document.getElementById("3").firstChild.value, document.getElementById("4").firstChild.value, document.getElementById("5").firstChild.value],
+                                [document.getElementById("6").firstChild.value, document.getElementById("7").firstChild.value, document.getElementById("8").firstChild.value]
+                            ];
+
+            spin.disabled = false;
+
+            fetch(`/pay/?bet=${bet}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+
+                body: JSON.stringify({
+                    "board": responseArr, "user": username, "dbToken": token
+                }),
+            })
+            .then(response => response.json())
+            .then(async function(data){
+                let iWin = document.createElement("img");
+                iWin.src = "symbols/win.png";
+                console.log(data)
+                document.getElementById("payout").innerText = data.payout;
+                if(data.payout > 0) {
+                    for(var x = 0; x < 10; x++){
+                        for(var i = 0; i < data.lines.length; i++){
+                            let symbol = document.getElementById(data.lines[i]).firstChild;
+
+                            document.getElementById(data.lines[i]).removeChild(document.getElementById(data.lines[i]).firstChild);
+                            document.getElementById(data.lines[i]).append(iWin);
+
+                            await sleep(100);
+
+                            document.getElementById(data.lines[i]).removeChild(document.getElementById(data.lines[i]).firstChild);
+                            document.getElementById(data.lines[i]).append(symbol);
+                        }
                     }
                 }
-
-                mid = top - 1;
-                bot = top - 2;
-
-                if(mid < 0){
-                    mid = size + mid;
-                }
-
-                if(bot < 0){
-                    bot = size + bot;
-                }
-
-                if (x === 0) {
-                                        
-                    document.getElementById("0").removeChild(document.getElementById("0").firstChild);
-                    document.getElementById("1").removeChild(document.getElementById("1").firstChild);
-                    document.getElementById("2").removeChild(document.getElementById("2").firstChild);
-                    document.getElementById("3").removeChild(document.getElementById("3").firstChild);
-                    document.getElementById("4").removeChild(document.getElementById("4").firstChild);
-                    document.getElementById("5").removeChild(document.getElementById("5").firstChild);
-                    document.getElementById("6").removeChild(document.getElementById("6").firstChild);
-                    document.getElementById("7").removeChild(document.getElementById("7").firstChild);
-                    document.getElementById("8").removeChild(document.getElementById("8").firstChild);
-
-                    
-                    document.getElementById("0").append(findImg(data[top][x]));
-                    document.getElementById("1").append(findImg(data[top][x+1]));
-                    document.getElementById("2").append(findImg(data[top][x+2]));
-                    document.getElementById("3").append(findImg(data[mid][x]));
-                    document.getElementById("4").append(findImg(data[mid][x+1]));
-                    document.getElementById("5").append(findImg(data[mid][x+2]));
-                    document.getElementById("6").append(findImg(data[bot][x]));
-                    document.getElementById("7").append(findImg(data[bot][x+1]));
-                    document.getElementById("8").append(findImg(data[bot][x+2]))
-                }
-
-                else if (x === 1) {
-                    document.getElementById("1").removeChild(document.getElementById("1").firstChild);
-                    document.getElementById("2").removeChild(document.getElementById("2").firstChild);
-                    document.getElementById("4").removeChild(document.getElementById("4").firstChild);
-                    document.getElementById("5").removeChild(document.getElementById("5").firstChild);
-                    document.getElementById("7").removeChild(document.getElementById("7").firstChild);
-                    document.getElementById("8").removeChild(document.getElementById("8").firstChild);
-                    
-                    document.getElementById("1").append(findImg(data[top][x]));
-                    document.getElementById("2").append(findImg(data[top][x+1]));
-                    document.getElementById("4").append(findImg(data[mid][x]));
-                    document.getElementById("5").append(findImg(data[mid][x+1]));
-                    document.getElementById("7").append(findImg(data[bot][x]));
-                    document.getElementById("8").append(findImg(data[bot][x+1]));
-                }
-
-                else {
-                    document.getElementById("2").removeChild(document.getElementById("2").firstChild);
-                    document.getElementById("5").removeChild(document.getElementById("5").firstChild);
-                    document.getElementById("8").removeChild(document.getElementById("8").firstChild);
-                    
-                    document.getElementById("2").append(findImg(data[top][x]));
-                    document.getElementById("5").append(findImg(data[mid][x]));
-                    document.getElementById("8").append(findImg(data[bot][x]));
-                }
-                await sleep(50);
-            }
+                document.getElementById("balance").innerText = data.dbBalance;
+            })
+            .catch((error) => {
+                console.error('Error', error);
+            })
         }
-        console.log(bet);
-
-        let responseArr = [
-                            [document.getElementById("0").firstChild.value, document.getElementById("1").firstChild.value, document.getElementById("2").firstChild.value],
-                            [document.getElementById("3").firstChild.value, document.getElementById("4").firstChild.value, document.getElementById("5").firstChild.value],
-                            [document.getElementById("6").firstChild.value, document.getElementById("7").firstChild.value, document.getElementById("8").firstChild.value]
-                        ];
-        
-        spin.disabled = false;
-       
-        fetch(`/pay/?bet=${bet}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-                            
-            body: JSON.stringify({
-                "board": responseArr, "user": username, "dbToken": token
-            }),
-        })
-        .then(response => response.json())
-        .then(async function(data){
-            let iWin = document.createElement("img");
-            iWin.src = "symbols/win.png";
-            console.log(data)
-            document.getElementById("payout").innerText = data.payout;
-            if(data.payout > 0) {
-                for(var x = 0; x < 10; x++){
-                    for(var i = 0; i < data.lines.length; i++){
-                        let symbol = document.getElementById(data.lines[i]).firstChild;
-                        
-                        document.getElementById(data.lines[i]).removeChild(document.getElementById(data.lines[i]).firstChild);
-                        document.getElementById(data.lines[i]).append(iWin);
-                        
-                        await sleep(100);
-                        
-                        document.getElementById(data.lines[i]).removeChild(document.getElementById(data.lines[i]).firstChild);
-                        document.getElementById(data.lines[i]).append(symbol);
-                    }
-                }
-            }
-            document.getElementById("balance").innerText = data.dbBalance;
-        })
-        .catch((error) => {
-            console.error('Error', error);
-        })
     })
     .catch((error) => {
         console.error('Error:', error);

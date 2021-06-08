@@ -40,7 +40,7 @@ spin.addEventListener("click", function(){
     })
     .then(response => response.json())
     .then(async function(data){
-        console.log(data);
+        console.log("data", data);
         if(data.hasOwnProperty("validBet")){
             return;
         }

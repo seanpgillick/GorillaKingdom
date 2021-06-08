@@ -321,8 +321,8 @@ app.post("/spin", function(req, res) {
             console.log(err);
         }
         if (result.length > 0){
-            dbBalance = parseFloat(result[0]["balance"]);
-            betAmount = parseFloat(req.body.bet);
+            let dbBalance = parseFloat(result[0]["balance"]);
+            let betAmount = parseFloat(req.body.bet);
                         
             if (betAmount > dbBalance){
                 res.send({"validBet": false}); 

@@ -126,7 +126,7 @@ spin.addEventListener("click", function(){
                     document.getElementById("5").append(findImg(data[mid][x]));
                     document.getElementById("8").append(findImg(data[bot][x]));
                 }
-                await sleep(50);
+                await sleep(25+runT);
             }
         }
         console.log(bet);

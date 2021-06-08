@@ -134,7 +134,7 @@ spin.addEventListener("click", function(){
                     document.getElementById("5").append(findImg(data[mid][x]));
                     document.getElementById("8").append(findImg(data[bot][x]));
                 }
-                await sleep(25+(i*2));
+                await sleep(50);
             }
         }
         console.log(bet);

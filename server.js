@@ -328,7 +328,7 @@ app.post("/spin", function(req, res) {
                 res.status(403).json({"validBet":false}); 
             }
         }
-    }
+    });
     let resJson = {};
     for(var i = 1; i < 31; i++){
         let list = [];

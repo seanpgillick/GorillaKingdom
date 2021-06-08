@@ -159,9 +159,6 @@ spin.addEventListener("click", function(){
         })
         .then(response => response.json())
         .then(async function(data){
-            if(!data.validBet){
-                return;
-            }
             let iWin = document.createElement("img");
             iWin.src = "symbols/win.png";
             console.log(data)

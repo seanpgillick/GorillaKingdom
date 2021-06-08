@@ -327,22 +327,24 @@ app.post("/spin", function(req, res) {
             if (betAmount > dbBalance){
                 res.send({"validBet": false}); 
             }
-        }
+            
+            else {
+                let resJson = {};
+                for(var i = 0; i < 30; i++){
+                    let list = [];
+                    let rand1 = Math.floor(Math.random() * (5-1) + 1);
+                    let rand2 = Math.floor(Math.random() * (5-1) + 1);
+                    let rand3 = Math.floor(Math.random() * (5-1) + 1);
+                    list.push(rand1);
+                    list.push(rand2);
+                    list.push(rand3);
+                    resJson[i] = list;
+
+                }
+                res.status = 200;
+                res.json(resJson);
+           }
     });
-    let resJson = {};
-    for(var i = 0; i < 30; i++){
-        let list = [];
-        let rand1 = Math.floor(Math.random() * (5-1) + 1);
-        let rand2 = Math.floor(Math.random() * (5-1) + 1);
-        let rand3 = Math.floor(Math.random() * (5-1) + 1);
-        list.push(rand1);
-        list.push(rand2);
-        list.push(rand3);
-        resJson[i] = list;
-    
-    }
-    res.status = 200;
-    res.json(resJson);
 });
 
 app.post("/pay/", (req, res) => {

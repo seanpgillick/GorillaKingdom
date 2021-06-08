@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Horse Racing Simulation</title>
+	<style>
+		table {
+			border-collapse: collapse;
+		}
+		th, td {
+			border: 1px solid black;
+			padding: 5px;
+		}
+		table, div, button {
+			margin: 1rem 0;
+		}
+	</style>
+</head>
+<body style="Background-color:lightgreen;">
+
+<h1>Horse Racing!</h1>
+
+<div>
+	<label for="horseSelection">Pick Your Horse:</label>
+	<select name="horseSelection" id="horse-select">
+		<option value="">Please select your horse!</option>
+		<option value="Blue">Blue</option>
+		<option value="Pink">Pink</option>
+		<option value="Red">Red</option>
+		<option value="Yellow">Yellow</option>
+	</select>
+</div>
+
+<!-- Bet Size Input -->
+<div id=betSize style="margin: 2px;">
+	<label for="betSize">Enter Bet Size:</label>
+	<input id="betSizeInput" type="number" min="1">
+</div>
+
+<!-- Button -->
+<button id="get-button" style="margin: 10px 0px;">Confirm Selection</button>
+
+<!-- Track Background -->
+<div id="track-div" style="background: linear-gradient(to right, green 90%, #783F04 10%); border:8px solid #783F04; margin:0px; width:95%;">
+
+<!-- Horse Figures -->
+<div style="margin:6px"></div>
+<img id="horse-blue-img" src="horse-blue.png" alt="Blue Horse" width="110" height="65"/>
+<span id="blue-span" style="margin-left:3.5%; vertical-align:top; color:#5DB2FF"></span>
+<div> </div>
+<img id="horse-pink-img" src="horse-pink.png" alt="Pink Horse" width="110" height="65"/>
+<span id="pink-span" style="margin-left:3.5%; vertical-align:top; color:#E75480"></span>
+
+<div> </div>
+<img id="horse-red-img" src="horse-red.png" alt="Red Horse" width="110" height="65"/>
+<span id="red-span" style="margin-left:3.5%; vertical-align:top; color:#FF0000"></span>
+
+<div> </div>
+<img id="horse-yellow-img" src="horse-yellow.png" alt="Yellow Horse" width="110" height="65"/>
+<span id="yellow-span" style="margin-left:3.5%; vertical-align:top; color:#CCCC00	"></span>
+<div style="margin:6px;"></div>
+
+</div>
+<script src="horse_race.js"></script>
+</body>
+</html>

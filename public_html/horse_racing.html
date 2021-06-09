@@ -261,15 +261,19 @@ function displayResults(firstPlaceColor, winAmount, loseAmount) {
 	let resultsDiv = document.createElement('h2');
 	let playAgain = document.createElement('button');
 	playAgain.textContent = "Play Again";
-	playAgain.style.margin = "6px 0px";
+	playAgain.style.margin = "5px 0px";
 	playAgain.style.fontSize = '12pt';
 	playAgain.setAttribute('id','play-again');
 
 	if (choicetext.toLowerCase()==firstPlaceColor) {
 		resultsDiv.textContent = "Congrats! You won $" + winAmount;
+		userBalance += winAmount;
+		changeBalance(userBalance);
 	}
 	else {
 		resultsDiv.textContent = "Sorry! You lost $" + loseAmount;
+		userBalance -= loseAmount;
+		changeBalance(userBalance);
 	}
 	resultsDiv.style.margin = "4px 0px";
 

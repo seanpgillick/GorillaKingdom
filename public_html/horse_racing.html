@@ -18,7 +18,7 @@
 </head>
 <body style="Background-color:lightgreen;">
 
-<h1>Horse Racing!</h1>
+<h1 id="heading" style="margin: 5px 0px"><u>Horse Racing!</u></h1>
 
 <div>
 	<label for="horseSelection">Pick Your Horse:</label>
@@ -38,7 +38,7 @@
 </div>
 
 <!-- Button -->
-<button id="get-button" style="margin: 10px 0px;">Confirm Selection</button>
+<button id="get-button" style="margin: 10px 0px;">Start Game</button>
 
 <!-- Track Background -->
 <div id="track-div" style="background: linear-gradient(to right, green 90%, #783F04 10%); border:8px solid #783F04; margin:0px; width:95%;">
@@ -261,6 +261,7 @@ function displayResults(firstPlaceColor, winAmount, loseAmount) {
 	let resultsDiv = document.createElement('h2');
 	let playAgain = document.createElement('button');
 	playAgain.textContent = "Play Again";
+	playAgain.style.margin = "6px 0px";
 	playAgain.style.fontSize = '12pt';
 	playAgain.setAttribute('id','play-again');
 
@@ -270,7 +271,7 @@ function displayResults(firstPlaceColor, winAmount, loseAmount) {
 	else {
 		resultsDiv.textContent = "Sorry! You lost $" + loseAmount;
 	}
-	resultsDiv.style.margin = "6px 0px";
+	resultsDiv.style.margin = "4px 0px";
 
 	bodyElement.appendChild(resultsDiv);
 	bodyElement.appendChild(playAgain);

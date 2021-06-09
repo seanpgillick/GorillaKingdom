@@ -232,8 +232,10 @@ function displayRankings(color, position) {
 	element.innerText = position + " Place!";
 	element.style.fontWeight = 'bolder';
 
+	//assign 1st place text with a different style
 	if (position == "1st") {
 		element.style.fontSize = "15pt";
+		element.style.textDecoration = "underline";
 	}
 }
 

@@ -1,9 +1,8 @@
-
 //define horse elements
-let horseBlue = document.getElementById("horse-blue-img");
-let horsePink = document.getElementById("horse-pink-img");
-let horseRed = document.getElementById("horse-red-img");
-let horseYellow = document.getElementById("horse-yellow-img");
+horseBlue = document.getElementById("horse-blue-img");
+horsePink = document.getElementById("horse-pink-img");
+horseRed = document.getElementById("horse-red-img");
+horseYellow = document.getElementById("horse-yellow-img");
 
 
 //return a random integer in range [min, max]; (inclusive of the max value)
@@ -50,16 +49,16 @@ function finishRace() {
 function incrementalMovement() {
 
 	//determine the random increments for each horse here
-	let nextMarginBlue = getRandomIntegerInRange(minMove, maxMove);
-	let nextMarginPink = getRandomIntegerInRange(minMove, maxMove);
-	let nextMarginRed = getRandomIntegerInRange(minMove, maxMove);
-	let nextMarginYellow = getRandomIntegerInRange(minMove, maxMove);
+	nextMarginBlue = getRandomIntegerInRange(minMove, maxMove);
+	nextMarginPink = getRandomIntegerInRange(minMove, maxMove);
+	nextMarginRed = getRandomIntegerInRange(minMove, maxMove);
+	nextMarginYellow = getRandomIntegerInRange(minMove, maxMove);
 
 	//add those random increments to each horse's running total of left margin
-	let totalMarginBlue += nextMarginBlue;
-	let totalMarginPink += nextMarginPink;
-	let totalMarginRed += nextMarginRed;
-	let totalMarginYellow += nextMarginYellow;
+	totalMarginBlue += nextMarginBlue;
+	totalMarginPink += nextMarginPink;
+	totalMarginRed += nextMarginRed;
+	totalMarginYellow += nextMarginYellow;
 
 	//display rankings as the horses finish
 	if (rankings.length==1) {

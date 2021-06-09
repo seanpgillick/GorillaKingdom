@@ -180,7 +180,7 @@ spin.addEventListener("click", function(){
                         }
                     }
                 }
-                document.getElementById("balance").innerText = data.dbBalance;
+                document.getElementById("balance").innerText = parseFloat(data.dbBalance).toFixed(2);
             })
             .catch((error) => {
                 console.error('Error', error);

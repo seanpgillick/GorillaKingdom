@@ -40,7 +40,6 @@ spin.addEventListener("click", function(){
     })
     .then(response => response.json())
     .then(async function(data){
-        console.log("data", data);
         if(data.hasOwnProperty("validBet")){
             spin.disabled = false;
             return;
@@ -139,7 +138,6 @@ spin.addEventListener("click", function(){
                     await sleep(50);
                 }
             }
-            console.log(bet);
 
             let responseArr = [
                                 [document.getElementById("0").firstChild.value, document.getElementById("1").firstChild.value, document.getElementById("2").firstChild.value],
@@ -163,7 +161,6 @@ spin.addEventListener("click", function(){
             .then(async function(data){
                 let iWin = document.createElement("img");
                 iWin.src = "symbols/win.png";
-                console.log(data)
                 document.getElementById("payout").innerText = data.payout;
                 if(data.payout > 0) {
                     for(var x = 0; x < 10; x++){
@@ -235,7 +232,7 @@ function findImg(num) {
         return iDiamond;
     }
     
-    return "yee";
+    return;
 }
 
 function createTable(rows, cols) {

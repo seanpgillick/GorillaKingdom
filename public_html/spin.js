@@ -249,6 +249,7 @@ function createTable(rows, cols) {
 
         for(var c = 0; c < cols; c++){
             var col = document.createElement("td");
+            col.style.border = "3px solid #654321";
             col.id = count;
             row.append(col);
             count++;
@@ -257,6 +258,8 @@ function createTable(rows, cols) {
     }
     tabObj.style.marginLeft = "auto";
     tabObj.style.marginRight = "auto";
+    tabObj.style.border = "7px solid #654321";
+
     tables.append(tabObj);
     document.getElementById("0").append(findImg(1));
     document.getElementById("1").append(findImg(1));

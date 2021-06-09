@@ -1,3 +1,13 @@
+//display the player's current balance
+userBalance = 200; //temporary value
+let heading = document.getElementById('heading');
+let balanceDiv = document.createElement('div');
+balanceDiv.setAttribute('id','balance');
+balanceDiv.innerText = "Current Balance: " + userBalance;
+balanceDiv.style.fontSize = '14pt';
+heading.appendChild(balanceDiv);
+
+
 //define horse elements
 horseBlue = document.getElementById("horse-blue-img");
 horsePink = document.getElementById("horse-pink-img");

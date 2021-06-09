@@ -24,7 +24,7 @@
 	<label for="horseSelection">Pick Your Horse:</label>
 	<select name="horseSelection" id="horse-select">
 		<option value="">Please select your horse!</option>
-		<option value="Blue">Blue</option>
+		<option value="Blue" selected>Blue</option>
 		<option value="Pink">Pink</option>
 		<option value="Red">Red</option>
 		<option value="Yellow">Yellow</option>
@@ -34,7 +34,7 @@
 <!-- Bet Size Input -->
 <div id=betSize style="margin: 2px;">
 	<label for="betSize">Enter Bet Size:</label>
-	<input id="betSizeInput" type="number" min="1">
+	<input id="betSizeInput" type="number" value=".10" min="0.10" max="1000.00" step=".10">
 </div>
 
 <!-- Button -->
